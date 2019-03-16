@@ -117,4 +117,4 @@ deploy:
 backup:
   type: git 
   repository:
-    github: git@github.com:sxz799/sxz799.github.io.git,hexo
+    origin: git@github.com:sxz799/sxz799.github.io.git,hexo
