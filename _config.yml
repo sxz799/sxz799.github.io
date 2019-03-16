@@ -116,5 +116,6 @@ deploy:
   branch: master
 backup:
   type: git 
+  theme: next
   repository:
     origin: git@github.com:sxz799/sxz799.github.io.git,hexo
