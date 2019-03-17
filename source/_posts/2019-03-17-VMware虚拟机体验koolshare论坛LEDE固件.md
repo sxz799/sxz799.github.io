@@ -3,11 +3,11 @@ title: VMware虚拟机体验koolshare论坛LEDE固件
 copyright: true
 date: 2019-03-17 21:38:09
 tags:
-	-虚拟机
-	-路由器
-	-LEDE
+	- 虚拟机
+	- 路由器
+	- LEDE
 categories:
-	-教程
+	- 教程
 comments:
 password:
 ---
