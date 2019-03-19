@@ -119,3 +119,8 @@ backup:
   theme: next
   repository:
     origin: git@github.com:sxz799/sxz799.github.io.git,hexo
+# 自动生成sitemap
+sitemap: 
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
