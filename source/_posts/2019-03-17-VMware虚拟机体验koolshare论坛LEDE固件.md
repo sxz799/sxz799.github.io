@@ -47,9 +47,11 @@ password:
 然后取消勾选本地连接中的ipv4和ipv6协议。  重点！重点！重点！重点！
 ## 四、配置VMware Network Adapter VMnet8 
 和上篇文章不同的是，这里我们的目的是通过虚拟机路由器系统进行上网，所以要配置上网关
+如下图
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190320192006.png" width="600px" />
 
 教程结束！
-//后期会更新一下虚拟网卡配置的图片。
+//2019年03月20日19:26:46 更新
 
 
 

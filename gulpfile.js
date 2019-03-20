@@ -44,6 +44,6 @@ gulp.task('minify-images', function() {
 });
 // 默认任务
 // gulp 4.0 适用的方式
-gulp.task('build', gulp.parallel('minify-html', 'minify-css', 'minify-js'
+gulp.task('b', gulp.parallel('minify-html', 'minify-css', 'minify-js'
  //build the website
 ));
