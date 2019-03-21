@@ -24,44 +24,56 @@ password:
 
 Git是一个的分布式版本控制系统。
 
-###什么是Github？
+### 什么是Github？
 
 Github是一个提供免费服务的代码托管网站。
 
-###什么是Hexo？
+### 什么是Hexo？
 
-Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 [Markdown](http://daringfireball.net/projects/markdown/)（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。(摘抄自hexo官网)
+Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 [Markdown](http://daringfireball.net/projects/markdown/(或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。(摘抄自hexo官网)
 
 如果对github和git的关系感兴趣，可以去这个网站简单了解一下
 
-1.https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137402760310626208b4f695940a49e5348b689d095fc000
-
-
+> https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137402760310626208b4f695940a49e5348b689d095fc000
 
 ## 二、安装Git、Node.js和hexo
-	### Git官网下载地址 https://www.git-scm.com/download/
-	### node.js官网下载地址 https://nodejs.org/en/ （建议下载LTS版本）
-	### hexo安装
-	安装好git和node.js后新建一个你要放置博客的文件夹，然后鼠标右键点击 Git bash here，在弹出的窗口输入
-		npm install -g hexo-cli //实际上在任意文件夹下都可以 ，hexo安装的目录由node.js的配置决定
+
+在以下网址下载软件
+Git官网下载地址 https://www.git-scm.com/download/
+node.js官网下载地址 https://nodejs.org/en/ （建议下载LTS版本）
+这两款软件选好安装目录使用默认设置即可
+
+### hexo安装
+安装好git和node.js后新建一个你要放置博客的文件夹，然后鼠标右键点击 Git bash here，在弹出的窗口输入
+`npm install -g hexo-cli		 //实际上在任意文件夹下都可以 ，hexo安装的目录由node.js的配置决定 `
 ## 三、Hexo博客相关内容
-		### 安装hexo
-		在博客目录鼠标右键点击 Git bash here 在弹出的窗口输入
-		hexo init //初始化博客
-		npm install //安装hexo需要的依赖包
-		这时就可以写博客了
-		hexo new 博客文章名
-		hexo g
-		hexo s //本地服务器，可以实时预览博客
-		完成这一步 在浏览器输入
-		localhost:4000
-		就可以看见博客了 //ctrl+c 可以关闭服务
-		hexo d //同步博客到github远程仓库，这里不需要输入，因为还没有部署git
-		服务搭建在本地是没有什么意义的，我们需要发布到互联网。可以选择购买服务器，自行搭建git服务器，也可以用github免费的代码托管服务
-		### 注册github并新建博客仓库
-		github官网 https://github.com/
-		自行注册
-		然后新建一个名为 xxx.github.io 的仓库 //xxx为你的github用户名，这里不能错！！！不能自定义。
+
+### 安装hexo
+
+在博客目录鼠标右键点击 Git bash here 在弹出的窗口输入
+`hexo init //初始化博客 `
+`npm install //安装hexo需要的依赖包 	`
+`npm  install hexo-deployer-git  --save    // 安装部署到github嗍需要的依赖包`
+这时就可以写博客了
+```	
+hexo g 				//hexo转化为静态网页
+hexo s 				//本地服务器，可以实时预览博客
+```	
+完成这一步 在浏览器打开下面的链接
+> http://localhost:4000/
+就可以看见系统默认的一篇博客了 //ctrl+c 可以关闭本地服务
+到这里博客就大致成型了
+但是服务搭建在本地是没有什么意义的，我们需要发布到互联网。可以选择购买服务器，自行搭建git服务，也可以用github免费的代码托管服务
+### 注册github并新建博客仓库
+github官网 https://github.com/
+自行注册
+然后新建一个名为 xxx.github.io 的仓库 //xxx为你的github用户名，这里不能错！！！不能自定义，必须要和github用户名相同
+### 生成ssh密钥并将公钥添加到github
+`ssh-keygen -t rsa -C "注册github时的email"`
+打开用户目录下的.ssh文件夹，打开id_rsa.pub文件，复制全部内容，粘贴到github的ssh处
+### 修改博客配置文件
+配置博客目录下的_config.yml配置文件
+
 ## 四、Git相关内容
 
 
