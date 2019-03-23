@@ -1,5 +1,5 @@
 ---
-title: 使用Github搭建hexo静态博客总结
+title: 使用Github搭建hexo静态博客总结(待更新)
 copyright: true
 date: 2019-03-20 23:57:50
 tags:
@@ -48,12 +48,12 @@ node.js官网下载地址 https://nodejs.org/en/ （建议下载LTS版本）
 `npm install -g hexo-cli		 //实际上在任意文件夹下都可以 ，hexo安装的目录由node.js的配置决定 `
 ## 三、Hexo博客相关内容
 
-### 安装hexo
+### 初始化hexo博客
 
 在博客目录鼠标右键点击 Git bash here 在弹出的窗口输入
 `hexo init //初始化博客 `
 `npm install //安装hexo需要的依赖包 	`
-`npm  install hexo-deployer-git  --save    // 安装部署到github嗍需要的依赖包`
+`npm  install hexo-deployer-git  --save    // 安装部署到github所需要的依赖包`
 这时就可以写博客了
 ```	
 hexo g 				//hexo转化为静态网页
