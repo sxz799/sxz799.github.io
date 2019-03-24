@@ -76,7 +76,7 @@ github官网 https://github.com/
 自行注册
 然后新建一个名为 xxx.github.io 的仓库 //xxx为你的github用户名，这里不能错！！！不能自定义，必须要和github用户名相同
 
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190324-140631%402x.png"/>
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190324-140631%402x.png" width="600px" />
 
 ### 生成ssh密钥并将公钥添加到github
 
@@ -85,15 +85,15 @@ github官网 https://github.com/
 `ssh-keygen -t rsa -C "注册github时的email"`
 打开用户目录下隐藏的.ssh文件夹，打开id_rsa.pub文件，复制全部内容，粘贴到github的ssh处
 
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190324-140304%402x.png"/>
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190324-140304%402x.png" width="600px" />
 
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190324140332.png"/>
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190324140332.png" width="600px" />
 
 ### 修改博客配置文件
 
 配置博客目录下的_config.yml配置文件
 
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190324140126.png"/>
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190324140126.png" width="600px" />
 
 这时就可以通过下面的命令将博客同步到github的仓库中
 
@@ -109,8 +109,7 @@ http://xxxxx.github.io   //xxxxx为你的用户名
 
 这一步不详细介绍了，域名自己选购
 
-### 域名解析
-
+### 添加域名解析
 域名解析的记录类型为CNAME 记录值为xxxxx.github.io   //xxxxx为你的用户名
 
 在博客目录的source文件夹添加一个CNAME文件 没有.txt或者其他
@@ -125,3 +124,5 @@ hexo g
 hexo d
 ```
 等域名解析更新后就可以通过域名访问博客了
+
+转载注明出处 谢谢
