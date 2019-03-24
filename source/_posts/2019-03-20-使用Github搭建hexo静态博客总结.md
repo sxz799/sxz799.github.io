@@ -57,9 +57,9 @@ node.js官网下载地址 https://nodejs.org/en/ （建议下载LTS版本）
 `npm  install hexo-deployer-git  --save    // 安装部署到github所需要的依赖包`
 这时就可以写博客了（建议先了解一下md语法然后下载一个md编辑器进行创作）
 ```	
-hexo n 博客文章名     //在source/_post目录生成对应md文件
-hexo g 				//hexo转化为静态网页
-hexo s 				//本地服务器，可以实时预览博客
+hexo n 博客文章名			//在source/_post目录生成对应md文件
+hexo g 					//hexo转化为静态网页
+hexo s 					//本地服务器，可以实时预览博客
 ```
 建议先了解一下md语法然后下载一个md编辑器进行创作
 完成这一步 在浏览器打开下面的链接
@@ -109,7 +109,7 @@ http://xxxxx.github.io   //xxxxx为你的用户名
 
 这一步不详细介绍了，域名自己选购
 
-###域名解析
+### 域名解析
 
 域名解析的记录类型为CNAME 记录值为xxxxx.github.io   //xxxxx为你的用户名
 
