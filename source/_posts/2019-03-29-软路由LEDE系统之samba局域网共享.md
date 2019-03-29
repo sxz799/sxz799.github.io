@@ -17,7 +17,7 @@ password:
 很久之前就想入手软路由了，但是动不动就上千的售价实在是难以接受。看到这个性价比还不错的就入手了。之前用的是k2p。没有usb接口，局域网共享就很难实现，而且就算有U盘，24小时工作也承受不了。现在终于可以好好享受一下samba带来的便携了。后期应该还会安装黑群辉实现更多的功能。
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。
 蜗牛星际主板上带了一个16G的固态硬盘。性能极差。和3.0的U盘速度差不多。装lede还勉强可以接受。现在没有硬盘也只能用这个来代替了。
-我安装的是![koolshare论坛](http://koolshare.cn/portal.php)的lede系统，酷软中心很多插件，还是挺好用的。
+我安装的是[koolshare论坛](http://koolshare.cn/portal.php)的lede系统，酷软中心很多插件，还是挺好用的。
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329233210.png" width="600px" />
 ## 一、为安装盘剩余的空间创建新分区
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。
