@@ -33,6 +33,6 @@
     "gulp-uglify": "^3.0.2"
   },
   "scripts": {
-    "d": "hexo clean && hexo g && gulp b"
+    "d": "hexo clean && hexo g && gulp g"
   }
 }
