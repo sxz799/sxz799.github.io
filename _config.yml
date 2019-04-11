@@ -5,10 +5,10 @@
 # Site
 title: 青丝蘸白雪i的Blog
 subtitle:
-description: 各方面都有涉及。。。
+description: 记录点滴。
 keywords:
 author: 青丝蘸白雪i
-language: zh-Hans
+language: zh-CN
 timezone:
 
 # URL
@@ -107,18 +107,18 @@ search:
   field: post
   format: html
   limit: 10000
-
+##字数统计
+symbols_count_time:
+  symbols: true 
+  time: true 
+  total_symbols: true 
+  total_time: true
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repository: https://github.com/sxz799/sxz799.github.io.git
   branch: master
-backup:
-  type: git 
-  theme: next
-  repository:
-    origin: git@github.com:sxz799/sxz799.github.io.git,hexo
 # 自动生成sitemap
 sitemap: 
   path: sitemap.xml
