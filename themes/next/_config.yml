@@ -222,7 +222,7 @@ links_layout: block
 #links_layout: inline
 links:
   #Title: http://example.com
-
+  Google: https://www.google.com.hk/
 # Sidebar Avatar
 avatar:
   # In theme directory (source/images): /images/avatar.gif
@@ -634,9 +634,9 @@ changyan:
 # More info available at https://valine.js.org
 valine:
   enable: true
-  appid:  HdlwEtFIKFzo8axxoSoLuT0e-gzGzoHsz # your leancloud application appid
-  appkey:  UIP0UfdV2nAUvVNDJNz7l6GF # your leancloud application appkey
-  notify: false # mail notifier , https://github.com/xCss/Valine/wiki
+  appid: HdlwEtFIKFzo8axxoSoLuT0e-gzGzoHsz # your leancloud application appid
+  appkey: UIP0UfdV2nAUvVNDJNz7l6GF # your leancloud application appkey
+  notify: true # mail notifier , https://github.com/xCss/Valine/wiki
   verify: false # Verification code
   placeholder: 来了老弟？ # comment box placeholder
   avatar: mm # gravatar style

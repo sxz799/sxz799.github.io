@@ -100,7 +100,7 @@ live2d:
 links_title: Links
 # links
 links:
-  Google: https://www.google.com.hk/
+
 #本地搜索
 search:
   path: search.xml

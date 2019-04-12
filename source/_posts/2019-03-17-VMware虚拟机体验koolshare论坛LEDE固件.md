@@ -41,7 +41,7 @@ password:
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ%E6%88%AA%E5%9B%BE20190317212958.png" width="600px" />
 配置好以后启动虚拟机。启动完毕后鼠标点击虚拟机内部
 然后输入 
-1.vi /etc/config/network
+`vi /etc/config/network`
 修改lan口的地址
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ%E6%88%AA%E5%9B%BE20190317212511.png" width="600px" />
 然后取消勾选本地连接中的ipv4和ipv6协议。  重点！重点！重点！重点！
