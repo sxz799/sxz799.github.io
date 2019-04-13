@@ -826,7 +826,7 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi
 busuanzi_count:
-  enable: false
+  enable: true
   total_visitors: true
   total_visitors_icon: user
   total_views: true
@@ -1184,8 +1184,7 @@ vendors:
   # gitalk & js-md5
   # See: https://github.com/gitalk/gitalk, https://github.com/emn178/js-md5
   # Example:
-  # gitalk_js: //cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js
-  # gitalk_css: //cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css
+  # gitalk_js: //cdn.jsdelivr.net/npm/gitalst/gitalk.css
   # md5: //cdn.jsdelivr.net/npm/js-md5@0/src/md5.min.js
   gitalk_js:
   gitalk_css:

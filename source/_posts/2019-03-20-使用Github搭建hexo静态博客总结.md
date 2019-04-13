@@ -1,5 +1,5 @@
 ---
-title: 使用Github搭建hexo静态博客总结(待更新)
+title: 使用Github搭建hexo静态博客总结
 copyright: true
 date: 2019-03-20 23:57:50
 tags:
@@ -124,5 +124,7 @@ hexo g
 hexo d
 ```
 等域名解析更新后就可以通过域名访问博客了
+
+关于博客的个性化可以看我的另一篇文章[这是链接](https://sxz799.xyz/2019/04/13/Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/)
 
 转载注明出处 谢谢
