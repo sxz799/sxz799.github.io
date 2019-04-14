@@ -125,6 +125,18 @@ hexo d
 ```
 等域名解析更新后就可以通过域名访问博客了
 
+## 新电脑上继续写博客
+
+现在新电脑上安装Git 、 node.js 、 Hexo
+`git clone -b 分支名 git@github.com:xxxx/xxxx.github.io.git  //克隆远程代码到本地`
+`npm install hexo --save`   //安装hexo
+`npm install` 				//安装hexo需要的依赖包
+`npm  install hexo-deployer-git  --save`  // 安装部署到github所需要的依赖包
+
+然后就是正常些博客的步骤了
+
+
+
 关于博客的个性化可以看我的另一篇文章[这是链接](https://sxz799.xyz/2019/04/13/Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/)
 
 转载注明出处 谢谢
