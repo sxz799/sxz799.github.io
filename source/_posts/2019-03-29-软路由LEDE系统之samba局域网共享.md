@@ -47,7 +47,7 @@ http://koolshare.cn/forum.php?mod=viewthread&tid=110543&highlight=samba
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步也是不需要做的。
 这里就很简单了，打开路由器管理界面简单设置即可
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329235605.png" width="600px" />
-选择挂载点，在自定义位置填入`/mnt/sda5` (注意不要输错了)
+选择挂载点，在自定义位置填入`/mnt/sda5` (挂载器要创建这个空文件夹，注意不要输错了)
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330000544.png" width="600px" />
 ## 三、将新创建的分区添加到samba的共享目录
 这里也很简单 按照下图的设置即可
