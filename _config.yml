@@ -88,12 +88,13 @@ live2d:
   tagMode: false
   log: false
   model:
-    use: live2d-widget-model-hijiki
+    use: live2d-widget-model-wanko
+    #use: live2d-widget-model-hijiki
     #use: live2d-widget-model-tororo
   display:
     position: left
-    width: 100
-    height: 200
+    width: 180
+    height: 180
   mobile:
     show: false
 # title, chinese available

@@ -8,7 +8,6 @@ tags:
 - samba
 categories:
 - 教程
-- 总结
 comments:
 password:
 ---
