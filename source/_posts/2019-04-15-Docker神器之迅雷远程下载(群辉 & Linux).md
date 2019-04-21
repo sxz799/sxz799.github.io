@@ -1,5 +1,5 @@
 ---
-title: 群辉下使用迅雷远程下载，附带Linux系统Docker安装
+title: Docker神器之迅雷远程下载(群辉 & Linux)
 copyright: true
 date: 2019-04-15 22:22:31
 tags:

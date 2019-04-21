@@ -1,5 +1,5 @@
 ---
-title: LEDE软路由&群辉下Docker神器之百度云下载
+title: Docker神器之百度云下载(群辉 & LEDE)
 copyright: true
 date: 2019-03-30 14:15:50
 tags:
@@ -14,10 +14,11 @@ password:
 
 # 前言
 入手了蜗牛星际，安装了lede以后发现酷软中心的aria2和tr都不能正常工作，可能是版本bug，无意间在论坛发现了利用docker这一神奇运行百度云第三方下载，尝试一番发现确实很好用，记录一下折腾的过程。
-原贴：`http://koolshare.cn/thread-154383-1-1.html`
+原贴：
+http://koolshare.cn/thread-154383-1-1.html
 我没有使用原贴中的镜像 而是选择了另一位大神oldiy的镜像，下面是他的DockerHub主页和博客。
-`https://hub.docker.com/u/oldiy/`
-`https://odcn.top/`
+https://hub.docker.com/u/oldiy/
+https://odcn.top/
 
 # LEDE软路由下使用
 ## 第一步 LEDE酷软中心安装Docker插件
@@ -62,8 +63,14 @@ http://你的路由器ip:5299   //这里的5299就是配置容器时的端口，
 浏览器输入 `<你的IP>:5299` 进入web页面
 
 ## 解决百度云限速
-web的设置页面修改appid为265486  
-默认工作目录修改为`/apps/baidu_shurufa ` 
+web的设置页面修改appid为
+```
+265486 
+```
+默认工作目录修改为
+```
+/apps/baidu_shurufa 
+```
 百度输入法不限速，所以修改为输入法的id 而默认工作目录就是登陆页面后所展现的目录
 把要下载的文件移动到/apps/baidu_shurufa 下载即可
 需要操作其他文件的时换回 266719 即可

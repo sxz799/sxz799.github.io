@@ -19,10 +19,10 @@ password:
 我安装的是[koolshare论坛](http://koolshare.cn/portal.php)的lede系统，酷软中心很多插件，还是挺好用的。
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329233210.png" width="600px" />
 注：本文借鉴了koolshare论坛的两个帖子 这里简单做了一些总结，和一些自己的经验
-```
+
 http://koolshare.cn/thread-154153-1-1.html
 http://koolshare.cn/forum.php?mod=viewthread&tid=110543&highlight=samba
-```
+
 ## 一、为安装盘剩余的空间创建新分区
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。
 ### 先运行分区工具
