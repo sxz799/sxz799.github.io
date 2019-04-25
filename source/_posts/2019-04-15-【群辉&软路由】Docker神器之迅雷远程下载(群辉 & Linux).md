@@ -17,7 +17,7 @@ password:
 # 群辉下安装和使用
 ## 一、Docker下载迅雷远程镜像
 注册表搜索 thunder-xware 并下载箭头指向的镜像:yinheli/docker-thunder-xware
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-222805%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190425-2016142x.png" width="600px" />
 ## 二、安装镜像
 1. 勾选使用高权限执行容器
 2. 点击高级设置
