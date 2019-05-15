@@ -36,7 +36,7 @@ password:
 
 # Linux系统下安装和使用
 ## 一、安装Docker下载迅雷远程镜像
-关于Docker的安装不在多说，直接yum install docker即可
+关于Docker的安装不在多说，请自行搜索安装教程
 在终端中输入`docker pull yinheli/docker-thunder-xware:latest` 下载镜像
 ## 二、安装镜像
 mkdir data  创建一个文件夹用于存放迅雷下载的资源
