@@ -5,9 +5,9 @@ date: 2019-09-03 16:50:52
 tags:
 - transmission
 - 远程
+- 防痴呆
 categories:
 - 教程
-- 防痴呆
 comments:
 password:
 ---
