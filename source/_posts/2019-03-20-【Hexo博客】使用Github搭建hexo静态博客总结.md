@@ -143,7 +143,7 @@ npm install
 ### 安装部署到github所需要的依赖包
 ```
 npm  install hexo-deployer-git  --save
-``` 
+```
 ### 安装gulp
 ```
 npm install gulp -g
