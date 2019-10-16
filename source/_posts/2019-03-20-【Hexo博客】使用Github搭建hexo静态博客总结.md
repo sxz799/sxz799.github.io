@@ -160,6 +160,11 @@ git config --global alias.bpush '!cd Desktop/blog;hexo clean;hexo g;gulp g;hexo 
 git config --global --unset alias.bpush
 ```
 
+### 快速推送
+```
+git config --global alias.fp '!git add .;git commit -m "快速push";git push'
+```
+取消方法同上，不建议使用，最好老老实实写commit
 
 关于博客的个性化可以看我的另一篇文章[这是链接](https://sxz799.ml/2019/04/13/Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/)
 
