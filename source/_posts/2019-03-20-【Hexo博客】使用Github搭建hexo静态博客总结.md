@@ -150,6 +150,17 @@ npm install gulp -g
 ```
 然后就是正常些博客的步骤了
 
+## 快速发布博客快捷设置
+```
+git config --global alias.bpush '!cd Desktop/blog;hexo clean;hexo g;gulp g;hexo d'
+```
+然后使用 git bpush 就可以一键更新博客并发布了(cd 后面的目录为你的博客文件目录）
+取消方式
+```
+git config --global --unset alias.bpush
+```
+
+
 关于博客的个性化可以看我的另一篇文章[这是链接](https://sxz799.ml/2019/04/13/Hexo%E5%8D%9A%E5%AE%A2%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/)
 
 转载注明出处 谢谢
