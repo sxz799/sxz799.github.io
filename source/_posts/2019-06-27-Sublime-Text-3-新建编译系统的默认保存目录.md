@@ -54,7 +54,7 @@ Win10下的编译系统文件：
 ## Sublime Text 3 新建编译系统的默认保存目录
 要先显示隐藏的目录和文件
 
-MAC OS⁩ ▸ ⁨用户⁩ ▸ ⁨sxz ▸ ⁨资源库⁩ ▸ ⁨Application Support⁩ ▸ ⁨Sublime Text 3⁩ ▸ ⁨Packages⁩ ▸ ⁨User⁩
+MAC OS⁩ ▸ ⁨用户⁩ ▸ ⁨xxx ▸ ⁨资源库⁩ ▸ ⁨Application Support⁩ ▸ ⁨Sublime Text 3⁩ ▸ ⁨Packages⁩ ▸ ⁨User⁩
 注：
 MAC OS修改为你的磁盘名
 sxz修改为你的用户名

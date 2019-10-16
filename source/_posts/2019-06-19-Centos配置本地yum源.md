@@ -11,13 +11,16 @@ password:
 ---
 
 一、挂载镜像文件
+```
 mkdir /mnt/cdrom
 mount /dev/cdrom /mnt/cdrom
-
+```
 二、修改yum源配置文件
+```
 cd /etc/yum.repo.d
 rm -rf *.repo
 vi /etc/yum.repo.d/Localyum.repo
+```
 内容为：
 ```
 [localyum]
@@ -27,6 +30,7 @@ gpgcheck=0
 enabled=1
 ```
 三、清空并重建缓存
-
+```
 yum clean all
 yum makecache
+```

@@ -18,8 +18,10 @@ password:
 [预览地址](https://huaji8.top/post/live2d-plugin-2.0/)
 
 ## 一、安装Live2D插件
-`npm install --save hexo-helper-live2d`
-`npm install xxxxx`  //xxxxx是包名
+```
+npm install --save hexo-helper-live2d
+npm install xxxxx //xxxxx是包名
+```
 下面是提供安装的列表，
 ```
 live2d-widget-model-chitose

@@ -14,6 +14,9 @@ password:
 
 镜像作者Docker[链接](https://registry.hub.docker.com/u/yinheli/docker-thunder-xware/)
 
+2019-10-16 19:45:58 更新
+现在迅雷远程速度很慢，而且设备code也不一定能获取到了，所以不推荐使用了！
+
 # 群辉下安装和使用
 ## 一、Docker下载迅雷远程镜像
 注册表搜索 thunder-xware 并下载箭头指向的镜像:yinheli/docker-thunder-xware
