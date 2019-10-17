@@ -152,12 +152,12 @@ npm install gulp -g
 
 ## 快速发布博客快捷设置
 ```
-git config --global alias.bpush '!cd Desktop/blog;hexo clean;hexo g;gulp g;hexo d'
+git config --global alias.bp '!hexo clean;hexo g;gulp g;hexo d'
 ```
-然后使用 git bpush 就可以一键更新博客并发布了(cd 后面的目录为你的博客文件目录）
+然后使用 git bp 就可以一键更新博客并发布了(cd 后面的目录为你的博客文件目录）
 取消方式
 ```
-git config --global --unset alias.bpush
+git config --global --unset alias.bp
 ```
 
 ### 快速推送
