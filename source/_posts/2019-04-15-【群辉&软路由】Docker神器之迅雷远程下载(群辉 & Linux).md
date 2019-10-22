@@ -35,7 +35,7 @@ password:
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223057%402x-min.png" width="600px" />
 8. 在弹出的页面中选择日志选项卡，找到最下面的`THE ACTIVE CODE IS: aabbcc` ,记录后面的代码
 <img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223150%402x-min.png" width="600px" />
-9. 点击这个[链接](http://yuancheng.xunlei.com) http://yuancheng.xunlei.com 登陆迅雷后输入刚才得到的代码即可。
+9. 点击这个链接<http://yuancheng.xunlei.com)> 登陆迅雷后输入刚才得到的代码即可。
 
 # Linux系统下安装和使用
 ## 一、安装Docker下载迅雷远程镜像
@@ -54,7 +54,7 @@ docker run -d --privileged=true \
 `docker ps`   //查看当前运行的容器
 `docker logs xware`  //查看迅雷远程的日志
 在日志的后几行会看到`THE ACTIVE CODE IS: aabbcc`这样一行代码，记录后面的代码。也就是设备CODE
-点击这个链接http://yuancheng.xunlei.com 登陆迅雷后输入刚才得到的代码即可。
+点击这个链接<http://yuancheng.xunlei.com> 登陆迅雷后输入刚才得到的代码即可。
 
 
 
