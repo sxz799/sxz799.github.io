@@ -7,7 +7,7 @@ tags:
 - LEDE
 - samba
 categories:
-- 教程
+- 实用教程
 comments:
 password:
 ---

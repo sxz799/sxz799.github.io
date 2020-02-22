@@ -5,7 +5,7 @@ date: 2019-06-27 00:39:45
 tags:
 - 防痴呆
 categories:
-- 技巧
+- 实用教程
 comments:
 password:
 ---

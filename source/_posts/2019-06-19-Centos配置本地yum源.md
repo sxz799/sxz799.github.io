@@ -5,7 +5,7 @@ date: 2019-06-19 00:35:12
 tags:
 - Linux
 categories:
-- 防痴呆
+- 实用教程
 comments:
 password:
 ---

@@ -7,7 +7,7 @@ tags:
 - 路由器
 - LEDE
 categories:
-- 教程
+- 实用教程
 comments:
 password:
 ---

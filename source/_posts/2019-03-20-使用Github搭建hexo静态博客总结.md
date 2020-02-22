@@ -9,7 +9,7 @@ tags:
 - hexo
 - git
 categories:
-- 总结
+- 博客教程
 comments:
 password:
 ---
