@@ -14,4 +14,4 @@ password:
 文件位置
 C:\ProgramData⁩\Microsoft⁩\Windows Defender⁩\Scans⁩\History⁩\Service⁩\DetectionHistory⁩
 ProgramData⁩十个隐藏目录，查看隐藏目录也很简单，鼠标点两下就可以。
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190623204037.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190623204037.png" width="600px" />

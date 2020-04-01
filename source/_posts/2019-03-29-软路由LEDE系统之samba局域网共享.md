@@ -17,7 +17,7 @@ password:
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。
 蜗牛星际主板上带了一个16G的固态硬盘。性能极差。和3.0的U盘速度差不多。装lede还勉强可以接受。现在没有硬盘也只能用这个来代替了。
 我安装的是[koolshare论坛](http://koolshare.cn/portal.php)的lede系统，酷软中心很多插件，还是挺好用的。
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329233210.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190329233210.png" width="600px" />
 注：本文借鉴了koolshare论坛的两个帖子 这里简单做了一些总结，和一些自己的经验
 
 http://koolshare.cn/thread-154153-1-1.html
@@ -27,9 +27,9 @@ http://koolshare.cn/forum.php?mod=viewthread&tid=110543&highlight=samba
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。
 ### 先运行分区工具
 `fdisk /dev/sda`
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329233753.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190329233753.png" width="600px" />
 ### 输入p查看当前分区
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329234053.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190329234053.png" width="600px" />
 ### 输入n创建新的分区
 这里由于我已经创建 就不在截图了 
 直接连续三次回车键，会默认将剩余的空间创建为一个新的分区。
@@ -45,12 +45,12 @@ http://koolshare.cn/forum.php?mod=viewthread&tid=110543&highlight=samba
 ## 二、挂载新创建的分区
 如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步也是不需要做的。
 这里就很简单了，打开路由器管理界面简单设置即可
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190329235605.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190329235605.png" width="600px" />
 选择挂载点，在自定义位置填入`/mnt/sda5` (挂载器要创建这个空文件夹，注意不要输错了)
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330000544.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190330000544.png" width="600px" />
 ## 三、将新创建的分区添加到samba的共享目录
 这里也很简单 按照下图的设置即可
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330001456.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190330001456.png" width="600px" />
 ### 给samba用户添加密码
 `smbpasswd -a root` （终端输入）
 然后输入密码回车

@@ -25,40 +25,40 @@ https://odcn.top/
 这里不多解释，直接安装即可
 ## 第二步 配置Docker插件
 按照下图的设置即可
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330142552.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330142552.png" width="600px" />
 ## 第三步 下载相关镜像
 在注册表页搜索相关镜像即可，如下图为百度云下载
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330143001.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330143001.png" width="600px" />
 ## 第四步 创建容器
 在镜像页选择已经下载的镜像创建即可。
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330143146.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330143146.png" width="600px" />
 在这里对容器进行相关配置，注意端口，和容器中给定的相同最好
 下面这一张图就能看明白端口和目录的设置了
 简单来说就是端口号正确且不与lede其他程序冲突就可以进入后台
 地址正确才能保证文件下载到你指定的位置
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330151403.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330151403.png" width="600px" />
 然后点击创建即可
 ## 进入Web页面查看安装情况
 启动成功后就可以通过下面的链接进入web页面了
 http://你的路由器ip:5299   //这里的5299就是配置容器时的端口，尽量和dockerhub的相同。如果不同应该是进不去相关页面的
 使用自己的百度账号登录即可，然后点击右上角的设置
 注意这里的目录，不要修改使用默认即可
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330144619.png" width="600px" />
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/20190330144816.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330144619.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/20190330144816.png" width="600px" />
 
 # 群辉下使用 （更新内容）
 ## 第一步 群辉套件中心安装Docker插件
 不多解释
 ## 第二步 下载镜像
 在注册表搜索`baidu`下载下图中的镜像
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/1111111.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/1111111.png" width="600px" />
 ## 第三步 配置镜像
 按照下图配置即可，配置完成后会自动启动容器
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/222222.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/222222.png" width="600px" />
 配置下载路径
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/333333.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/333333.png" width="600px" />
 配置端口
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/444444.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/old/444444.png" width="600px" />
 ## 第四步 打开Web管理页面
 浏览器输入 `<你的IP>:5299` 进入web页面
 

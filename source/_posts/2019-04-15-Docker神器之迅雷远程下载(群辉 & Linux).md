@@ -20,21 +20,21 @@ password:
 # 群辉下安装和使用
 ## 一、Docker下载迅雷远程镜像
 注册表搜索 thunder-xware 并下载箭头指向的镜像:yinheli/docker-thunder-xware
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190425-2016142x.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190425-2016142x.png" width="600px" />
 ## 二、安装镜像
 1. 勾选使用高权限执行容器
 2. 点击高级设置
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-222913%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190415-222913%402x-min.png" width="600px" />
 3. 在卷属性卡中点击添加文件，并选择你期望远程迅雷的下载位置（自定义）
 4. 装载路径为 /TDDOWNLOAD （不可更改！！！）
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223001%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190415-223001%402x-min.png" width="600px" />
 5. 网络选择左下角的与Docker Host使用相同的网络
 6. 点击应用创建容器
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223020%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190415-223020%402x-min.png" width="600px" />
 7. 点开Docker页面左侧的容器选项卡，点击刚创建的容器，然后点击左上角的详情
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223057%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190415-223057%402x-min.png" width="600px" />
 8. 在弹出的页面中选择日志选项卡，找到最下面的`THE ACTIVE CODE IS: aabbcc` ,记录后面的代码
-<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/QQ20190415-223150%402x-min.png" width="600px" />
+<img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/QQ20190415-223150%402x-min.png" width="600px" />
 9. 点击这个链接<http://yuancheng.xunlei.com)> 登陆迅雷后输入刚才得到的代码即可。
 
 # Linux系统下安装和使用
