@@ -1,0 +1,319 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><script></script><link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css"><link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"><link rel="stylesheet" href="/css/main.css?v=7.1.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg?v=7.1.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg?v=7.1.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg?v=7.1.0"><link rel="mask-icon" href="/images/head.jpg?v=7.1.0" color="#222"><script id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"7.1.0",sidebar:{position:"left",display:"hide",offset:12,onmobile:!1,dimmer:!1},back2top:!0,back2top_sidebar:!0,fancybox:!0,fastclick:!1,lazyload:!1,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="ARM处理的八种寻址方式  一、寄存器寻址操作数的值在寄存器中，指令中的地址码字段指出的是寄存器编号，指令执行时直接取出寄存器值来操作。 二、立即寻址立即寻址指令中的操作码字段后面的地址码部分即是操作数本身，也就是说，数据就包含在指令当中，取出指令也就取出了可以立即使用的操作数(这样的数称为立即数)。 三、寄存器移位寻址寄存器移位寻址是ARM指令集特有的寻址方式。当第2个操作数是寄存器移位方式时，"><meta name="keywords" content="学习,ARM嵌入式"><meta property="og:type" content="article"><meta property="og:title" content="ARM处理的八种寻址方式"><meta property="og:url" content="http://www.sxz799.ml/2018/12/24/ARM处理的八种寻址方式/index.html"><meta property="og:site_name" content="青丝蘸白雪i的踩坑记"><meta property="og:description" content="ARM处理的八种寻址方式  一、寄存器寻址操作数的值在寄存器中，指令中的地址码字段指出的是寄存器编号，指令执行时直接取出寄存器值来操作。 二、立即寻址立即寻址指令中的操作码字段后面的地址码部分即是操作数本身，也就是说，数据就包含在指令当中，取出指令也就取出了可以立即使用的操作数(这样的数称为立即数)。 三、寄存器移位寻址寄存器移位寻址是ARM指令集特有的寻址方式。当第2个操作数是寄存器移位方式时，"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e29b21058.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e2abf2454.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e371131db.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e382ab2b5.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e418ef3ba.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e42bd67b7.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e54ac11a9.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e51dede59.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e5c9e91ee.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e5df5c5bd.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e62d70e87.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e63d66e3e.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e77846866.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e7875aa60.png"><meta property="og:image" content="https://i.loli.net/2018/12/24/5c20e7b55552c.png"><meta property="og:updated_time" content="2020-10-18T10:27:22.175Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="ARM处理的八种寻址方式"><meta name="twitter:description" content="ARM处理的八种寻址方式  一、寄存器寻址操作数的值在寄存器中，指令中的地址码字段指出的是寄存器编号，指令执行时直接取出寄存器值来操作。 二、立即寻址立即寻址指令中的操作码字段后面的地址码部分即是操作数本身，也就是说，数据就包含在指令当中，取出指令也就取出了可以立即使用的操作数(这样的数称为立即数)。 三、寄存器移位寻址寄存器移位寻址是ARM指令集特有的寻址方式。当第2个操作数是寄存器移位方式时，"><meta name="twitter:image" content="https://i.loli.net/2018/12/24/5c20e29b21058.png"><link rel="canonical" href="http://www.sxz799.ml/2018/12/24/ARM处理的八种寻址方式/"><script id="page.configurations">CONFIG.page={sidebar:""}</script><title>ARM处理的八种寻址方式 | 青丝蘸白雪i的踩坑记</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">青丝蘸白雪i的踩坑记</span><span class="logo-line-after"><i></i></span></a></div></div><div class="site-nav-toggle"> <button aria-label="切换导航栏"><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://www.sxz799.ml/2018/12/24/ARM处理的八种寻址方式/"><span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person"><meta itemprop="name" content="青丝蘸白雪i"><meta itemprop="description" content="记录踩过的坑。"><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"><meta itemprop="name" content="青丝蘸白雪i的踩坑记"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">ARM处理的八种寻址方式</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建时间：2018-12-24 21:41:23" itemprop="dateCreated datePublished" datetime="2018-12-24T21:41:23+08:00">2018-12-24</time> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i></span> <span class="post-meta-item-text">更新于</span> <time title="修改时间：2020-10-18 18:27:22" itemprop="dateModified" datetime="2020-10-18T18:27:22+08:00">2020-10-18</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习总结/" itemprop="url" rel="index"><span itemprop="name">学习总结</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span> <span class="post-meta-item-text">评论数：</span><a href="/2018/12/24/ARM处理的八种寻址方式/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/12/24/ARM处理的八种寻址方式/" itemprop="commentCount"></span></a></span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-eye"></i> 阅读次数：<span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span> <span class="post-meta-item-text">本文字数：</span> <span title="本文字数">1k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span> <span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">1 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><p>ARM处理的八种寻址方式</p><h2 id="一、寄存器寻址"><a href="#一、寄存器寻址" class="headerlink" title="一、寄存器寻址"></a>一、寄存器寻址</h2><p>操作数的值在寄存器中，指令中的地址码字段指出的是寄存器编号，指令执行时直接取出寄存器值来操作。<br><img src="https://i.loli.net/2018/12/24/5c20e29b21058.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e2abf2454.png" width="600px"></p><h2 id="二、立即寻址"><a href="#二、立即寻址" class="headerlink" title="二、立即寻址"></a>二、立即寻址</h2><p>立即寻址指令中的操作码字段后面的地址码部分即是操作数本身，也就是说，数据就包含在指令当中，取出指令也就取出了可以立即使用的操作数(这样的数称为立即数)。<br><img src="https://i.loli.net/2018/12/24/5c20e371131db.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e382ab2b5.png" width="600px"></p><h2 id="三、寄存器移位寻址"><a href="#三、寄存器移位寻址" class="headerlink" title="三、寄存器移位寻址"></a>三、寄存器移位寻址</h2><p>寄存器移位寻址是ARM指令集特有的寻址方式。当第2个操作数是寄存器移位方式时，第2个寄存器操作数在与第1个操作数结合之前，选择进行移位操作。<br><img src="https://i.loli.net/2018/12/24/5c20e418ef3ba.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e42bd67b7.png" width="600px"></p><h2 id="四、寄存器间接寻址"><a href="#四、寄存器间接寻址" class="headerlink" title="四、寄存器间接寻址"></a>四、寄存器间接寻址</h2><p>寄存器间接寻址指令中的地址码给出的是一个通用寄存器的编号，所需的操作数保存在寄存器指定地址的存储单元中，即寄存器为操作数的地址指针。<br><img src="https://i.loli.net/2018/12/24/5c20e54ac11a9.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e51dede59.png" width="600px"></p><h2 id="五、基址寻址"><a href="#五、基址寻址" class="headerlink" title="五、基址寻址"></a>五、基址寻址</h2><p>基址寻址就是将基址寄存器的内容与指令中给出的偏移量相加，形成操作数的有效地址。基址寻址用于访问基址附近的存储单元，常用于查表、数组操作、功能部件寄存器问等。<br><img src="https://i.loli.net/2018/12/24/5c20e5c9e91ee.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e5df5c5bd.png" width="600px"></p><h2 id="六、多寄存器寻址"><a href="#六、多寄存器寻址" class="headerlink" title="六、多寄存器寻址"></a>六、多寄存器寻址</h2><p>多寄存器寻址一次可传送几个寄存器值，允许一条指令传送16个寄存器的任何子集或所有寄存器。<br><img src="https://i.loli.net/2018/12/24/5c20e62d70e87.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e63d66e3e.png" width="600px"><br>在多寄存器寻址中会进行2个操作，①是操作数据②是修改地址<br>LDMIA中的A表示先进行①操作，再进行②操作。如果是LDMIB则先②后①<br>LDMIA中的I表示存储器地址由低到高操作。如果是D则表示由高到低。</p><h2 id="七、堆栈寻址"><a href="#七、堆栈寻址" class="headerlink" title="七、堆栈寻址"></a>七、堆栈寻址</h2><p>堆栈是一个按特定顺序进行存取的存储区，操作顺序为“后进先出” 。堆栈寻址是隐含的，它使用一个专门的寄存器(堆栈指针) 指向一块存储区域(堆栈，指针所指向的存储单元即是堆栈的栈顶。存储器堆栈可分为两种：<br>向上生长：向高地址方向生长，称为递增堆栈<br>向下生长：向低地址方向生长，称为递减堆栈<br>堆栈指针指向最后压入的堆栈的有效数据项，称为满堆栈；堆栈指针指向下一个待压入数据的空位置，称为空堆栈。<br>所有可以组合出四种类型的堆栈方式：<br>满递增：堆栈向上增长，堆栈指针指向内含有效数据项的最高地址。指令如LDMFA、STMFA等；<br>空递增：堆栈向上增长，堆栈指针指向堆栈上的第一个空位置。指令如LDMEA、STMEA等；<br>满递减：堆栈向下增长，堆栈指针指向内含有效数据项的最低地址。指令如LDMFD、STMFD等；<br>空递减：堆栈向下增长，堆栈指针向堆栈下的第一个空位置。指令如LDMED、STMED等。<br><img src="https://i.loli.net/2018/12/24/5c20e77846866.png" width="600px"><br><img src="https://i.loli.net/2018/12/24/5c20e7875aa60.png" width="600px"></p><h2 id="八、相对寻址"><a href="#八、相对寻址" class="headerlink" title="八、相对寻址"></a>八、相对寻址</h2><p>相对寻址是基址寻址的一种变通。由程序计数器PC提供基准地址，指令中的地址码字段作为偏移量，两者相加后得到的地址即为操作数的有效地址。<br><img src="https://i.loli.net/2018/12/24/5c20e7b55552c.png" width="600px"></p><p>转载注明出处 谢谢</p></div><div><div id="reward-container"><div>坚持原创技术分享，您的支持将鼓励我继续创作</div> <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';"> 打赏</button><div id="qr" style="display:none"><div style="display:inline-block"> <img src="/images/wechatpay.jpg" alt="青丝蘸白雪i 微信支付"><p>微信支付</p></div><div style="display:inline-block"> <img src="/images/alipay.jpg" alt="青丝蘸白雪i 支付宝"><p>支付宝</p></div></div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"> <strong>本文作者：</strong> 青丝蘸白雪i</li><li class="post-copyright-link"> <strong>本文链接：</strong> <a href="http://www.sxz799.ml/2018/12/24/ARM处理的八种寻址方式/" title="ARM处理的八种寻址方式">http://www.sxz799.ml/2018/12/24/ARM处理的八种寻址方式/</a></li><li class="post-copyright-license"> <strong>版权声明：</strong> 本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/学习/" rel="tag"><i class="fa fa-tag"></i> 学习</a><a href="/tags/ARM嵌入式/" rel="tag"><i class="fa fa-tag"></i> ARM嵌入式</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/12/20/《ARM嵌入式》提纲总结/" rel="next" title="《ARM嵌入式》提纲总结"><i class="fa fa-chevron-left"></i> 《ARM嵌入式》提纲总结</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/03/13/虚拟机内系统通过NAT方式连接外网，同时与本机进行通信/" rel="prev" title="虚拟机内系统通过NAT方式连接外网，同时与本机进行通信">虚拟机内系统通过NAT方式连接外网，同时与本机进行通信<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div><div class="comments" id="comments"></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">青丝蘸白雪i</p><div class="site-description motion-element" itemprop="description">记录踩过的坑。</div></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives/"><span class="site-state-item-count">34</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/"><span class="site-state-item-count">8</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/"><span class="site-state-item-count">34</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/sxz799" title="GitHub &rarr; https://github.com/sxz799" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="https://weibo.com/5526581320/profile?topnav=1&wvr=6&is_all=1" title="微博 &rarr; https://weibo.com/5526581320/profile?topnav=1&wvr=6&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i> 微博</a></span><span class="links-of-author-item"><a href="https://www.zhihu.com/people/qing-si-zhan-bai-xue-19/activities" title="知乎 &rarr; https://www.zhihu.com/people/qing-si-zhan-bai-xue-19/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-bell"></i> 知乎</a></span><span class="links-of-author-item"><a href="https://www.jianshu.com/u/e020f2b2194e" title="简书 &rarr; https://www.jianshu.com/u/e020f2b2194e" rel="noopener" target="_blank"><i class="fa fa-fw fa-bomb"></i> 简书</a></span><span class="links-of-author-item"><a href="https://me.csdn.net/u010519914" title="CSDN &rarr; https://me.csdn.net/u010519914" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i> CSDN</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"> <a href="https://www.google.com.hk/" title="https://www.google.com.hk/" rel="noopener" target="_blank">Google</a></li></ul></div></div></div><div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、寄存器寻址"><span class="nav-number">1.</span> <span class="nav-text">一、寄存器寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、立即寻址"><span class="nav-number">2.</span> <span class="nav-text">二、立即寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、寄存器移位寻址"><span class="nav-number">3.</span> <span class="nav-text">三、寄存器移位寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、寄存器间接寻址"><span class="nav-number">4.</span> <span class="nav-text">四、寄存器间接寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、基址寻址"><span class="nav-number">5.</span> <span class="nav-text">五、基址寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、多寄存器寻址"><span class="nav-number">6.</span> <span class="nav-text">六、多寄存器寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、堆栈寻址"><span class="nav-number">7.</span> <span class="nav-text">七、堆栈寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、相对寻址"><span class="nav-number">8.</span> <span class="nav-text">八、相对寻址</span></a></li></ol></div></div></div><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span><span class="with-love" id="animate"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">青丝蘸白雪i</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-area-chart"></i></span> <span title="站点总字数">59k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-coffee"></i></span> <span title="站点阅读时长">53 分钟</span></div><div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="post-meta-item-icon"><i class="fa fa-user"></i></span><span class="site-uv" title="总访客量"><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-eye"></i></span><span class="site-pv" title="总访问量"><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="/lib/jquery/index.js?v=2.1.3"></script><script src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script><script src="/js/utils.js?v=7.1.0"></script><script src="/js/motion.js?v=7.1.0"></script><script src="/js/affix.js?v=7.1.0"></script><script src="/js/schemes/pisces.js?v=7.1.0"></script><script src="/js/scrollspy.js?v=7.1.0"></script><script src="/js/post-details.js?v=7.1.0"></script><script src="/js/next-boot.js?v=7.1.0"></script><script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var GUEST=["nick","mail","link"],guest="nick,mail,link";guest=guest.split(",").filter(function(e){return-1<GUEST.indexOf(e)}),new Valine({el:"#comments",verify:!0,notify:!1,appId:"oDOE1FExkOXjKTwMUfJOmnpl-MdYXbMMI",appKey:"K66G8HUqPNvXWorTlddCjV1J",placeholder:"老铁们，留言的时候记得带上邮箱哦，方便给你们回复哦！",avatar:"mm",meta:guest,pageSize:"10",visitor:!1,lang:"zh-cn"})</script><script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script>$(".highlight").each(function(t,e){var n=$("<div>").addClass("highlight-wrap");$(e).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(t){var e=$(this).parent().find(".code").find(".line").map(function(t,e){return $(e).text()}).toArray().join("\n"),n=document.createElement("textarea"),o=window.pageYOffset||document.documentElement.scrollTop;n.style.top=o+"px",n.style.position="absolute",n.style.opacity="0",n.readOnly=!0,n.value=e,document.body.appendChild(n),n.select(),n.setSelectionRange(0,e.length),n.readOnly=!1,document.execCommand("copy")?$(this).text("复制成功"):$(this).text("复制失败"),n.blur(),$(this).blur()})).on("mouseleave",function(t){var e=$(this).find(".copy-btn");setTimeout(function(){e.text("复制")},300)}).append(e)})</script><script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/wanko.model.json"},display:{position:"left",width:180,height:180},mobile:{show:!1}})</script></body></html>

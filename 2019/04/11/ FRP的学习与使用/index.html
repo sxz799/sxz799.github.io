@@ -1,0 +1,319 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><script></script><link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css"><link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2"><link rel="stylesheet" href="/css/main.css?v=7.1.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg?v=7.1.0"><link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg?v=7.1.0"><link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg?v=7.1.0"><link rel="mask-icon" href="/images/head.jpg?v=7.1.0" color="#222"><script id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"7.1.0",sidebar:{position:"left",display:"hide",offset:12,onmobile:!1,dimmer:!1},back2top:!0,back2top_sidebar:!0,fancybox:!0,fastclick:!1,lazyload:!1,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="description" content="前言自从入手了蜗牛星际以后，一直在折腾，先是安装了软路由，现在换成了PVE下虚拟LEDE软路由和黑群晖。可以远程访问的NAS才是一个完整的NAS,由于在宿舍大家一块用一条网线，虽然有公网地址，但联通公司不给改桥接，后来想想也挺麻烦的，而且宿舍的网线也只有4芯，即使路由器拨号也无法多播，就放弃DDNS了。于是开始研究内网穿透。 为什么要用FRP1.没钱购买花生壳的付费服务，免费的局限性太大2.学习一"><meta name="keywords" content="内网穿透,群晖"><meta property="og:type" content="article"><meta property="og:title" content="FRP内网穿透访问家中的NAS和路由器后台"><meta property="og:url" content="http://www.sxz799.ml/2019/04/11/ FRP的学习与使用/index.html"><meta property="og:site_name" content="青丝蘸白雪i的踩坑记"><meta property="og:description" content="前言自从入手了蜗牛星际以后，一直在折腾，先是安装了软路由，现在换成了PVE下虚拟LEDE软路由和黑群晖。可以远程访问的NAS才是一个完整的NAS,由于在宿舍大家一块用一条网线，虽然有公网地址，但联通公司不给改桥接，后来想想也挺麻烦的，而且宿舍的网线也只有4芯，即使路由器拨号也无法多播，就放弃DDNS了。于是开始研究内网穿透。 为什么要用FRP1.没钱购买花生壳的付费服务，免费的局限性太大2.学习一"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190411195654.png"><meta property="og:updated_time" content="2020-10-18T10:27:22.176Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="FRP内网穿透访问家中的NAS和路由器后台"><meta name="twitter:description" content="前言自从入手了蜗牛星际以后，一直在折腾，先是安装了软路由，现在换成了PVE下虚拟LEDE软路由和黑群晖。可以远程访问的NAS才是一个完整的NAS,由于在宿舍大家一块用一条网线，虽然有公网地址，但联通公司不给改桥接，后来想想也挺麻烦的，而且宿舍的网线也只有4芯，即使路由器拨号也无法多播，就放弃DDNS了。于是开始研究内网穿透。 为什么要用FRP1.没钱购买花生壳的付费服务，免费的局限性太大2.学习一"><meta name="twitter:image" content="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190411195654.png"><link rel="canonical" href="http://www.sxz799.ml/2019/04/11/ FRP的学习与使用/"><script id="page.configurations">CONFIG.page={sidebar:""}</script><title>FRP内网穿透访问家中的NAS和路由器后台 | 青丝蘸白雪i的踩坑记</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">青丝蘸白雪i的踩坑记</span><span class="logo-line-after"><i></i></span></a></div></div><div class="site-nav-toggle"> <button aria-label="切换导航栏"><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://www.sxz799.ml/2019/04/11/ FRP的学习与使用/"><span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person"><meta itemprop="name" content="青丝蘸白雪i"><meta itemprop="description" content="记录踩过的坑。"><meta itemprop="image" content="/images/avatar.gif"></span><span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"><meta itemprop="name" content="青丝蘸白雪i的踩坑记"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">FRP内网穿透访问家中的NAS和路由器后台</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建时间：2019-04-11 16:39:01" itemprop="dateCreated datePublished" datetime="2019-04-11T16:39:01+08:00">2019-04-11</time> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i></span> <span class="post-meta-item-text">更新于</span> <time title="修改时间：2020-10-18 18:27:22" itemprop="dateModified" datetime="2020-10-18T18:27:22+08:00">2020-10-18</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/博客教程/" itemprop="url" rel="index"><span itemprop="name">博客教程</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span> <span class="post-meta-item-text">评论数：</span><a href="/2019/04/11/ FRP的学习与使用/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/04/11/ FRP的学习与使用/" itemprop="commentCount"></span></a></span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-eye"></i> 阅读次数：<span class="busuanzi-value" id="busuanzi_value_page_pv"></span></span><div class="post-symbolscount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span> <span class="post-meta-item-text">本文字数：</span> <span title="本文字数">2.9k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span> <span class="post-meta-item-text">阅读时长 &asymp;</span> <span title="阅读时长">3 分钟</span></div></div></header><div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自从入手了蜗牛星际以后，一直在折腾，先是安装了软路由，现在换成了PVE下虚拟LEDE软路由和黑群晖。可以远程访问的NAS才是一个完整的NAS,由于在宿舍大家一块用一条网线，虽然有公网地址，但联通公司不给改桥接，后来想想也挺麻烦的，而且宿舍的网线也只有4芯，即使路由器拨号也无法多播，就放弃DDNS了。于是开始研究内网穿透。</p><h2 id="为什么要用FRP"><a href="#为什么要用FRP" class="headerlink" title="为什么要用FRP"></a>为什么要用FRP</h2><p>1.没钱购买花生壳的付费服务，免费的局限性太大<br>2.学习一些新的东西</p><h2 id="对FRP的理解"><a href="#对FRP的理解" class="headerlink" title="对FRP的理解"></a>对FRP的理解</h2><p>感觉frp和远程代理很像，支持的底层协议也很丰富，配置相对简单，而且不需要安装。通过命令行方式启动，有一点Linux基础的用户就可以完美驾驭。<br>作者<a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">github主页</a><br>根据作者的介绍，frp的基础功能是实现远程tcp访问和ssh链接。而用的更多的确实http协议带来的远程web链接，访问家中的NAS和路由器后台。</p><h2 id="下载以及配置"><a href="#下载以及配置" class="headerlink" title="下载以及配置"></a>下载以及配置</h2><p>直接在github页面下载即可(注意服务的与客户端的版本尽量相同)<br>配置过程<br>下载frp：<br><code>wget https://github.com/fatedier/frp/releases/download/v0.26.0/frp_0.26.0_linux_amd64.tar.gz</code><br>解压：<br><code>tar -zxvf frp_0.26.0_linux_amd64.tar.gz</code><br>进入解压后的文件夹：<br><code>cd frp_0.26.0_linux_amd64.tar.gz</code><br>编辑服务端配置文件：<br><code>vi frps.ini</code><br>输入i进入编辑模式<br><code>i</code><br>根据文章后面的内容进行具体配置<br>编辑完成后按一下键盘左上角esc键退出编辑<br>输入:wq保存并退出<br>启动frp服务端并保持后台运行 （第一次测试时不需要&amp;符号即可前台运行，ctrl+c即可退出）<br><code>nohup ./frps -c ./frps.ini &amp;</code><br>客户端和服务端类似，不过将frps更换为frpc （这里的s就是server服务端，c就是client客户端）<br>下载frp：<br><code>wget https://github.com/fatedier/frp/releases/download/v0.26.0/frp_0.26.0_linux_amd64.tar.gz</code><br>解压：<br><code>tar -zxvf frp_0.26.0_linux_amd64.tar.gz</code><br>进入解压后的文件夹：<br><code>cd frp_0.26.0_linux_amd64.tar.gz</code><br>编辑客户端配置文件：<br><code>vi frpc.ini</code>//<br>输入i进入编辑模式<br><code>i</code><br>根据文章后面的内容进行具体配置<br>编辑完成后按一下键盘左上角esc键退出编辑,保存并退出<br><code>:wq</code> 记得按esc退出编辑状态<br>启动frp服务端并保持后台运行<br><code>nohup ./frpc -c ./frpc.ini &amp;</code></p><h3 id="服务端配置文件"><a href="#服务端配置文件" class="headerlink" title="服务端配置文件"></a>服务端配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[common] </span><br><span class="line">#服务器ip</span><br><span class="line">bind_addr = 0.0.0.0  </span><br><span class="line">#frp端口 </span><br><span class="line">bind_port = 7000</span><br><span class="line">#口令配置</span><br><span class="line">token = xxx </span><br><span class="line">##frp协议和端口配置 （根据自己的需要保留即可）</span><br><span class="line">bind_udp_port = 7001</span><br><span class="line">kcp_bind_port = 7002</span><br><span class="line">vhost_http_port = 80     </span><br><span class="line">vhost_https_port = 443</span><br><span class="line"></span><br><span class="line">##frp的统计信息，可以浏览器输入http://服务器ip:7500查看，账号密码为admin，可以在下面配置中修改</span><br><span class="line">dashboard_addr = 0.0.0.0</span><br><span class="line">dashboard_port = 7500</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = admin </span><br><span class="line"></span><br><span class="line">##frp日志配置 </span><br><span class="line">log_file = ./frps.log</span><br><span class="line">log_level = info</span><br><span class="line">log_max_days = 3</span><br></pre></td></tr></table></figure><h3 id="客户端配置文件"><a href="#客户端配置文件" class="headerlink" title="客户端配置文件"></a>客户端配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">####IP也可以是域名 </span><br><span class="line">server_addr = x.x.x.x  </span><br><span class="line">frp服务器端口</span><br><span class="line">server_port = 7000</span><br><span class="line">#口令配置，要和服务端一致</span><br><span class="line">token = xxx </span><br><span class="line">##frp日志配置 （根据自己的需要保留或者删除）</span><br><span class="line">log_file = ./frpc.log</span><br><span class="line">log_level = info</span><br><span class="line">log_max_days = 3</span><br><span class="line"></span><br><span class="line">#[]里面的内容自定义，建议用作标示</span><br><span class="line">[lede] </span><br><span class="line">type = http</span><br><span class="line">local_ip = 192.168.123.1  </span><br><span class="line">local_port = 80				</span><br><span class="line">custom_domains = xxx.youdomain.com	</span><br><span class="line"></span><br><span class="line">[nas]</span><br><span class="line">type = http     </span><br><span class="line">local_ip = 192.168.123.102               </span><br><span class="line">local_port = 5000           </span><br><span class="line">custom_domains = yyy.youdomain.com  </span><br><span class="line"></span><br><span class="line">[pve]</span><br><span class="line">type = https</span><br><span class="line">local_ip = 192.168.123.100</span><br><span class="line">local_port = 8006</span><br><span class="line">custom_domains = zzz.youdomain.com</span><br><span class="line">#这里我的客户端配置，三个域名分别对应三个不同的web页面</span><br><span class="line">#custom_domains是自己的域名</span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/sxz799/blog_tuchuang/master/img/old/20190411195654.png"></p><h2 id="解决远程Transmission无法使用"><a href="#解决远程Transmission无法使用" class="headerlink" title="解决远程Transmission无法使用"></a>解决远程Transmission无法使用</h2><p>修改Transmission的配置文件settings.json ，启动密码登录即可（大约在第43行开始）<br>个人猜测这个白名单在内网穿透时无效。（未经验证）<br></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&quot;rpc-authentication-required&quot;: true,</span><br><span class="line">    &quot;rpc-bind-address&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;rpc-enabled&quot;: true,</span><br><span class="line">    &quot;rpc-host-whitelist&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rpc-host-whitelist-enabled&quot;: true,</span><br><span class="line">    &quot;rpc-password&quot;: &quot;&#123;925c1d0775d6e63d3ccd87a8f97f48d38e9f013fupumAV6s&quot;,</span><br><span class="line">    &quot;rpc-port&quot;: 9091,</span><br><span class="line">    &quot;rpc-url&quot;: &quot;/transmission/&quot;,</span><br><span class="line">    &quot;rpc-username&quot;: &quot;admin&quot;,</span><br><span class="line">    &quot;rpc-whitelist&quot;: &quot;&quot;,</span><br><span class="line">    &quot;rpc-whitelist-enabled&quot;: false,</span><br></pre></td></tr></table></figure><p></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>FRP整体配置还是比较简单的，只要了解了其原理就能轻松使用。</p></div><div><div id="reward-container"><div>坚持原创技术分享，您的支持将鼓励我继续创作</div> <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';"> 打赏</button><div id="qr" style="display:none"><div style="display:inline-block"> <img src="/images/wechatpay.jpg" alt="青丝蘸白雪i 微信支付"><p>微信支付</p></div><div style="display:inline-block"> <img src="/images/alipay.jpg" alt="青丝蘸白雪i 支付宝"><p>支付宝</p></div></div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"> <strong>本文作者：</strong> 青丝蘸白雪i</li><li class="post-copyright-link"> <strong>本文链接：</strong> <a href="http://www.sxz799.ml/2019/04/11/ FRP的学习与使用/" title="FRP内网穿透访问家中的NAS和路由器后台">http://www.sxz799.ml/2019/04/11/ FRP的学习与使用/</a></li><li class="post-copyright-license"> <strong>版权声明：</strong> 本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/内网穿透/" rel="tag"><i class="fa fa-tag"></i> 内网穿透</a><a href="/tags/群晖/" rel="tag"><i class="fa fa-tag"></i> 群晖</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/04/06/蜗牛星际之安装PVE+LEDE+群辉/" rel="next" title="蜗牛星际之安装PVE+LEDE+群辉"><i class="fa fa-chevron-left"></i> 蜗牛星际之安装PVE+LEDE+群辉</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/2019/04/13/Hexo博客个性化定制/" rel="prev" title="Hexo博客个性化定制">Hexo博客个性化定制<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article></div></div><div class="comments" id="comments"></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">青丝蘸白雪i</p><div class="site-description motion-element" itemprop="description">记录踩过的坑。</div></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives/"><span class="site-state-item-count">34</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/"><span class="site-state-item-count">8</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/"><span class="site-state-item-count">34</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/sxz799" title="GitHub &rarr; https://github.com/sxz799" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="https://weibo.com/5526581320/profile?topnav=1&wvr=6&is_all=1" title="微博 &rarr; https://weibo.com/5526581320/profile?topnav=1&wvr=6&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i> 微博</a></span><span class="links-of-author-item"><a href="https://www.zhihu.com/people/qing-si-zhan-bai-xue-19/activities" title="知乎 &rarr; https://www.zhihu.com/people/qing-si-zhan-bai-xue-19/activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-bell"></i> 知乎</a></span><span class="links-of-author-item"><a href="https://www.jianshu.com/u/e020f2b2194e" title="简书 &rarr; https://www.jianshu.com/u/e020f2b2194e" rel="noopener" target="_blank"><i class="fa fa-fw fa-bomb"></i> 简书</a></span><span class="links-of-author-item"><a href="https://me.csdn.net/u010519914" title="CSDN &rarr; https://me.csdn.net/u010519914" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i> CSDN</a></span></div><div class="links-of-blogroll motion-element links-of-blogroll-block"><div class="links-of-blogroll-title"><i class="fa fa-fw fa-link"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"> <a href="https://www.google.com.hk/" title="https://www.google.com.hk/" rel="noopener" target="_blank">Google</a></li></ul></div></div></div><div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要用FRP"><span class="nav-number">2.</span> <span class="nav-text">为什么要用FRP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对FRP的理解"><span class="nav-number">3.</span> <span class="nav-text">对FRP的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载以及配置"><span class="nav-number">4.</span> <span class="nav-text">下载以及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端配置文件"><span class="nav-number">4.1.</span> <span class="nav-text">服务端配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端配置文件"><span class="nav-number">4.2.</span> <span class="nav-text">客户端配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决远程Transmission无法使用"><span class="nav-number">5.</span> <span class="nav-text">解决远程Transmission无法使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div></div></div><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span><span class="with-love" id="animate"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">青丝蘸白雪i</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-area-chart"></i></span> <span title="站点总字数">59k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-coffee"></i></span> <span title="站点阅读时长">53 分钟</span></div><div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.0</div><div class="busuanzi-count"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span class="post-meta-item-icon"><i class="fa fa-user"></i></span><span class="site-uv" title="总访客量"><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-eye"></i></span><span class="site-pv" title="总访问量"><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span></div></div></footer></div><script>"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script src="/lib/jquery/index.js?v=2.1.3"></script><script src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script><script src="/js/utils.js?v=7.1.0"></script><script src="/js/motion.js?v=7.1.0"></script><script src="/js/affix.js?v=7.1.0"></script><script src="/js/schemes/pisces.js?v=7.1.0"></script><script src="/js/scrollspy.js?v=7.1.0"></script><script src="/js/post-details.js?v=7.1.0"></script><script src="/js/next-boot.js?v=7.1.0"></script><script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var GUEST=["nick","mail","link"],guest="nick,mail,link";guest=guest.split(",").filter(function(e){return-1<GUEST.indexOf(e)}),new Valine({el:"#comments",verify:!0,notify:!1,appId:"oDOE1FExkOXjKTwMUfJOmnpl-MdYXbMMI",appKey:"K66G8HUqPNvXWorTlddCjV1J",placeholder:"老铁们，留言的时候记得带上邮箱哦，方便给你们回复哦！",avatar:"mm",meta:guest,pageSize:"10",visitor:!1,lang:"zh-cn"})</script><script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script><script>$(".highlight").each(function(t,e){var n=$("<div>").addClass("highlight-wrap");$(e).after(n),n.append($("<button>").addClass("copy-btn").append("复制").on("click",function(t){var e=$(this).parent().find(".code").find(".line").map(function(t,e){return $(e).text()}).toArray().join("\n"),n=document.createElement("textarea"),o=window.pageYOffset||document.documentElement.scrollTop;n.style.top=o+"px",n.style.position="absolute",n.style.opacity="0",n.readOnly=!0,n.value=e,document.body.appendChild(n),n.select(),n.setSelectionRange(0,e.length),n.readOnly=!1,document.execCommand("copy")?$(this).text("复制成功"):$(this).text("复制失败"),n.blur(),$(this).blur()})).on("mouseleave",function(t){var e=$(this).find(".copy-btn");setTimeout(function(){e.text("复制")},300)}).append(e)})</script><script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({pluginRootPath:"live2dw/",pluginJsPath:"lib/",pluginModelPath:"assets/",tagMode:!1,log:!1,model:{jsonPath:"/live2dw/assets/wanko.model.json"},display:{position:"left",width:180,height:180},mobile:{show:!1}})</script></body></html>

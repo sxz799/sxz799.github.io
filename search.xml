@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[test]]></title>
+    <url>%2F2020%2F10%2F18%2Ftest%2F</url>
+    <content type="text"><![CDATA[这是一篇测试博客，等下就回删除]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[使用ProGuard混淆你的JAVA代码]]></title>
+    <url>%2F2020%2F06%2F14%2F%E5%9C%A8Maven%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8ProGuard%E6%B7%B7%E6%B7%86%E4%BD%A0%E7%9A%84JAVA%E4%BB%A3%E7%A0%81%2F</url>
+    <content type="text"><![CDATA[在Maven项目中使用Proguard十分简单 只要在pom文件的标签内添加如下代码即可12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667 &lt;!-- ProGuard混淆插件--&gt; &lt;plugin&gt; &lt;groupId&gt;com.github.wvengen&lt;/groupId&gt; &lt;artifactId&gt;proguard-maven-plugin&lt;/artifactId&gt; &lt;version&gt;2.1.0&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;!-- 混淆时刻，这里是打包的时候混淆--&gt; &lt;phase&gt;package&lt;/phase&gt; &lt;goals&gt; &lt;!-- 使用插件的什么功能，当然是混淆--&gt; &lt;goal&gt;proguard&lt;/goal&gt; &lt;/goals&gt; &lt;/execution&gt; &lt;/executions&gt; &lt;configuration&gt; &lt;!-- 是否将生成的PG文件安装部署--&gt; &lt;attach&gt;true&lt;/attach&gt; &lt;!-- 是否混淆--&gt; &lt;obfuscate&gt;true&lt;/obfuscate&gt; &lt;!-- 指定生成文件分类 --&gt; &lt;attachArtifactClassifier&gt;pg&lt;/attachArtifactClassifier&gt; &lt;options&gt; &lt;!-- JDK目标版本1.8--&gt; &lt;option&gt;-target 1.8&lt;/option&gt; &lt;!-- 不做收缩（删除注释、未被引用代码）--&gt; &lt;option&gt;-dontshrink&lt;/option&gt; &lt;!-- 不做优化（变更代码实现逻辑）--&gt; &lt;option&gt;-dontoptimize&lt;/option&gt; &lt;!-- 不路过非公用类文件及成员--&gt; &lt;option&gt;-dontskipnonpubliclibraryclasses&lt;/option&gt; &lt;option&gt;-dontskipnonpubliclibraryclassmembers&lt;/option&gt; &lt;!--不用大小写混合类名机制--&gt; &lt;option&gt;-dontusemixedcaseclassnames&lt;/option&gt; &lt;!-- 优化时允许访问并修改有修饰符的类和类的成员 --&gt; &lt;option&gt;-allowaccessmodification&lt;/option&gt; &lt;!-- 确定统一的混淆类的成员名称来增加混淆--&gt; &lt;option&gt;-useuniqueclassmembernames&lt;/option&gt; &lt;!-- 不混淆所有包名--&gt; &lt;option&gt;-keeppackagenames&lt;/option&gt; &lt;!-- 需要保持的属性：异常，注解等--&gt; &lt;option&gt;-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,*Annotation*,Synthetic,EnclosingMethod&lt;/option&gt; &lt;!-- 不混淆所有的set/get方法 --&gt; &lt;option&gt;-keepclassmembers public class * &#123;void set*(***);*** get*();&#125;&lt;/option&gt;&lt;!-- 不混淆所有的services.dao.ChargeDAO类内的所有方法方法 --&gt; &lt;option&gt;-keep class services.dao.ChargeDAO &#123; *; &#125;&lt;/option&gt; &lt;/options&gt; &lt;!--class 混淆后输出的jar包--&gt; &lt;outjar&gt;hx.jar&lt;/outjar&gt; &lt;!-- 添加依赖，这里你可以按你的需要修改，这里测试只需要一个JRE的Runtime包就行了 --&gt; &lt;libs&gt; &lt;lib&gt;$&#123;java.home&#125;/lib/rt.jar&lt;/lib&gt; &lt;lib&gt;$&#123;java.home&#125;/lib/jce.jar&lt;/lib&gt; &lt;/libs&gt; &lt;!-- 对什么东西进行加载，这里仅有classes成功，毕竟你也不可能对配置文件及JSP混淆吧--&gt; &lt;injar&gt;classes&lt;/injar&gt; &lt;!-- 输出目录--&gt; &lt;outputDirectory&gt;$&#123;project.build.directory&#125;&lt;/outputDirectory&gt; &lt;/configuration&gt; &lt;/plugin&gt;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[JSP-JDBC连接池的使用]]></title>
+    <url>%2F2020%2F05%2F28%2FJSP-JDBC%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[一、添加maven依赖如何使用maven不做详细介绍，这里只记录下大体过程，方便以后查找使用在项目的pom.xml文件的 标签中添加如下依赖12345678910111213//mysql链接驱动&lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;version&gt;5.1.25&lt;/version&gt; &lt;/dependency&gt; //druid连接池jar包 &lt;!-- https://mvnrepository.com/artifact/com.alibaba/druid --&gt; &lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid&lt;/artifactId&gt; &lt;version&gt;1.1.10&lt;/version&gt; &lt;/dependency&gt; 二、配置druid的配置文件在resources资源目录下添加conf.properties配置文件，内容如下：1234567driverClassName=com.mysql.jdbc.Driverurl=jdbc:mysql://192.168.200.100:3306/wdadmin?useSSL=falseusername=rootpassword=123456initialSize=5maxActive=10maxWait=3000 三、构建druid连接池工具类12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879import com.alibaba.druid.pool.DruidDataSourceFactory;import javax.sql.DataSource;import java.io.IOException;import java.sql.*;import java.util.Properties;/** * 使用连接池与数据库链接 */public class DBHelper &#123; private static DataSource ds; //创建静态连接池对象 static &#123; try &#123; //加载配置文件 Properties pro=new Properties(); pro.load(DBHelperAdmin.class.getClassLoader().getResourceAsStream(&quot;conf.properties&quot;)); //获取连接池对象 ds= DruidDataSourceFactory.createDataSource(pro); &#125; catch (IOException e) &#123; e.printStackTrace(); &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; public static Connection getConnection throws SQLException &#123; //获取连接对象 return ds.getConnection(); &#125; public static DataSource getDataSource throws SQLException &#123; //获取连接池对象 return ds; &#125; /** * 重载链接关闭函数 */ public static void DBClose(ResultSet rs) &#123; if (rs != null) &#123; try &#123; rs.close(); rs = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; &#125; public static void DBClose(PreparedStatement ps) &#123; if (ps != null) &#123; try &#123; ps.close(); ps = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; &#125; public static void DBClose(Statement ps) &#123; if (ps != null) &#123; try &#123; ps.close(); ps = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; &#125; public static void DBClose(Connection conn) &#123; if (conn != null) &#123; try &#123; conn.close(); conn = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>JDBC连接池</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JSP-JDBC连接mysql基础使用方法]]></title>
+    <url>%2F2020%2F05%2F28%2FJSP-JDBC%E8%BF%9E%E6%8E%A5mysql%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[一、下载必备jar包下载 mysql-connector-java-5.1.48-bin.jar 二、编写JDBC工具类代码如下12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879/** * 导入包 */import java.sql.Connection;import java.sql.DriverManager;public class DBHelper &#123; //配置静态变量 分别是驱动名称，url 用户名 密码，初始化Connection连接对象 private static final String driver = &quot;com.mysql.jdbc.Driver&quot;; private static final String url = &quot;jdbc:mysql://localhost:3306/ccls?useSSL=false&quot;; private static final String username = &quot;root&quot;; private static final String password = &quot;123456&quot;; private static Connection conn=null; //静态代码块，负责加载驱动 static &#123; try &#123; Class.forName(driver); &#125; catch (Exception ex) &#123; ex.printStackTrace(); &#125; &#125; //创建获取连接方法getConnection()，返回数据库链接对象 public static Connection getConnection() throws Exception &#123; if(conn==null) &#123; conn = DriverManager.getConnection(url,username,password); return conn; &#125; return conn; &#125; /** * 测试数据库连接 */ public static void main(String[] args) &#123; try &#123; Connection conn = DBHelper.getConnection(); if(conn!=null) System.out.println(&quot;数据库链接正常&quot;); else &#123; System.out.println(&quot;数据库链接异常&quot;); &#125; &#125; catch (Exception ex) &#123; ex.printStackTrace(); &#125; &#125; //资源释放方法 public static void DBClose(ResultSet rs ,PreparedStatement ps,Connection conn) &#123; if (rs != null) &#123; try &#123; rs.close(); rs = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; if (ps != null) &#123; try &#123; ps.close(); ps = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; if (conn != null) &#123; try &#123; conn.close(); conn = null; &#125; catch (Exception e) &#123; e.printStackTrace(); &#125; &#125; &#125;&#125; 三、使用工具类实例1234567891011121314151617181920212223242526/** * 判断用户登录函数 */ public boolean checkUser(String name, String pwd) &#123; Connection conn = null; PreparedStatement ps = null; ResultSet rs = null; try &#123; conn = DBHelper.getConnection(); String sql = &quot;SELECT * FROM user WHERE name =? AND pwd = ?&quot;; ps = conn.prepareStatement(sql); ps.setString(1, name); ps.setString(2, pwd); rs = ps.executeQuery(); if (rs.next()) &#123; return true; &#125; else &#123; return false; &#125; &#125; catch (Exception e) &#123; e.printStackTrace(); return false; &#125; finally &#123; DBHelper.DBClose(rs,ps,conn); &#125; &#125;]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>JDBC 数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[修改Tomcat的默认访问路径为你的JSP项目首页]]></title>
+    <url>%2F2020%2F05%2F22%2F%E4%BF%AE%E6%94%B9Tomcat%E7%9A%84%E9%BB%98%E8%AE%A4%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%E4%B8%BA%E4%BD%A0%E7%9A%84JSP%E9%A1%B9%E7%9B%AE%E9%A6%96%E9%A1%B5%2F</url>
+    <content type="text"><![CDATA[我们都知道将打包好的项目放到Tomcat的webapp目录下后，Tomcat会自动解压，但是如果想访问项目就需要在url后加上我们的项目目录才可以访问到我们项目的默认index主页（这个是可以修改的），那么我们怎样做到输入端口号后直接访问到我们的项目呢?也很简单，修改Tomcat的配置文件就可以实现了。 配置方法找到Tomcat安装目录下的conf文件夹内的server.xml文件，找到最后面部分添加这一段代码1&lt;Context path=&quot;&quot; docBase=&quot;WDAdmin&quot; debug=&quot;0&quot;/&gt; 123456789101112131415161718192021 &lt;Host name=&quot;localhost&quot; appBase=&quot;webapps&quot; unpackWARs=&quot;true&quot; autoDeploy=&quot;true&quot;&gt; &lt;!-- SingleSignOn valve, share authentication between web applications Documentation at: /docs/config/valve.html --&gt; &lt;!-- &lt;Valve className=&quot;org.apache.catalina.authenticator.SingleSignOn&quot; /&gt; --&gt; &lt;!-- Access log processes all example. Documentation at: /docs/config/valve.html Note: The pattern used is equivalent to using pattern=&quot;common&quot; --&gt; &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;localhost_access_log&quot; suffix=&quot;.txt&quot; pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt; &lt;!-- 添加下面这段代码 --&gt; &lt;Context path=&quot;&quot; docBase=&quot;WDAdmin&quot; debug=&quot;0&quot;/&gt; &lt;/Host&gt; &lt;/Engine&gt; &lt;/Service&gt;&lt;/Server&gt; 按照下图的提示进行修改即可]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JSP基础之页面元素]]></title>
+    <url>%2F2020%2F02%2F24%2FJSP%E5%9F%BA%E7%A1%80%E4%B9%8B%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%2F</url>
+    <content type="text"><![CDATA[JSP页面元素指令、注释、脚本、JSP声明、JSP表达式、静态内容 一、指令page指令位于顶端，一个页面可有多个page指令&lt;%@ page 属性1=”属性值1” 属性2=”属性值1,属性值2” … %&gt;可选属性：language 指定jsp页面使用的脚本语言 javaimport 引用脚本语言中使用到的类文件contentType 指定jsp页面采用的编码方式 text/html,ISO-5589-1 1&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=utf-8&quot; %&gt; include指令：嵌入外部文件到当前jsp文件，同时解析这个页面中的jsp语句taglib指令：使用标签库定义新的自定义标签，在jsp页面中启用定制行为二、注释html注释 (客户端可见)&lt;!-- html注释 --&gt; JSP注释 (客户端不可见)&lt;%-- JSP注释 --%&gt; java注释 (客户端不可见)123456&lt;%//单行注释/*多行注释*/%&gt; 三、脚本在JSP页面中执行的java代码123&lt;% out.println(&quot;你好！，这是调用out对象打印输出的&quot;)%&gt; 四、JSP声明在JSP页面中定义变量或者方法语法：&lt;%! java代码 %&gt;1234567&lt;%! String s=&quot;zhangsan&quot;; //声明了一个字符串变量 int add(int x,int y) //声明了一个函数，返回整数和 &#123; return x+y; &#125; %&gt; 五、JSP表达式在jsp页面中执行的表达式语法：&lt;% =表达式 %&gt;12你好，&lt;%=s %&gt;x+y=&lt;%=add(10,5)%&gt; JSP页面的生命周期 JSP阶段项目之九九乘法表12345678910111213141516171819202122232425262728293031323334353637383940414243444546&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=utf-8&quot; %&gt;&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;这是标题&lt;/title&gt;&lt;/head&gt;&lt;body&gt; &lt;%! //返回HTML代码，表达式调用 String printMultiTable1() &#123; String s=&quot;&quot;; for(int i=1;i&lt;=9;i++) &#123; for(int j=1;j&lt;=i;j++) &#123; s=s+i+&quot;*&quot;+j+&quot;=&quot;+(i*j)+&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;; &#125; s=s+&quot;&lt;br&gt;&quot;; &#125; return s; &#125; //jsp内置OUT对象，使用脚本方式调用 void printMultiTable2(JspWriter out) throws Exception &#123; for(int i=1;i&lt;=9;i++) &#123; for(int j=1;j&lt;=i;j++) &#123; out.println(i+&quot;*&quot;+j+&quot;=&quot;+(i*j)+&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;); &#125; out.println(&quot;&lt;br&gt;&quot;); &#125; &#125; %&gt; &lt;h1&gt;九九乘法表&lt;/h1&gt; &lt;hr&gt; &lt;%=printMultiTable1() %&gt; &lt;%//表达式调用无需;结尾%&gt; &lt;br&gt; &lt;%printMultiTable2(out); //脚本方式调用需要;结尾 %&gt; &lt;%//脚本方式调用需要;结尾 %&gt; &lt;br&gt;&lt;/body&gt;&lt;/html&gt;]]></content>
+      <categories>
+        <category>JSP总结</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo博客之Valine评论系统及邮件通知插件]]></title>
+    <url>%2F2020%2F02%2F22%2FHexo%E5%8D%9A%E5%AE%A2%E4%B9%8BValine%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%E5%8F%8A%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5%E6%8F%92%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[在之前的文章中曾经提到过Valine的评论系统，今天来系统的介绍一下使用方法和添加邮件提醒功能。首先要感谢Valine 开发好用的项目和DesertsP开发的Valine-Admin插件。 启用Valine评论系统1.注册LeanCloud2.进入控制台创建应用3.点击应用-设置-安全中心-Web安全域名，填入你的域名4.点击应用-设置-应用Keys找到AppID、AppKey5.找到hexo目录内主题文件夹（每个人都不同，我的是next）的_config.yml文件找到Valine，大概在633行附近，修改对应值6.hexo三连就可以在文章页面看到评论系统了。 启用启用Valine评论系统原作者的教程很详细了，这里就不简单搬运了，记录一下我遇到的一下小问题吧。这是链接1.提前弄明白邮箱的STMP2.设置好变量后部署，修改变量后要重启实例才可以]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[PC常用软件分享]]></title>
+    <url>%2F2019%2F12%2F23%2FPC%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E5%88%86%E4%BA%AB%2F</url>
+    <content type="text"><![CDATA[自己常用的几款软件，PC端很实用！不提供下载链接，请自行百度。1.录屏软件-CapturaGithub 主页：https://github.com/MathewSachin/Captura/2.音乐软件-Listen1Github 主页：https://github.com/listen13.磁盘分区-DiskGenius5.04.磁盘清理工具-CCleaner_Pro5.电脑文件图形化-SpaceSniffer6.解压缩软件-winrar7.文件批量改名王1.38.图标提取BeCyIconGrabber9.Xshell and WinSCP10.win10优化工具-Dism++官网链接 https://www.chuyu.me/zh-Hans/index.html11.下载工具-IDM12.待更新…]]></content>
+      <categories>
+        <category>软件分享</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Python笔记之模拟键盘鼠标操作]]></title>
+    <url>%2F2019%2F12%2F04%2FPython%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%A8%A1%E6%8B%9F%E9%94%AE%E7%9B%98%E9%BC%A0%E6%A0%87%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[前言：因为手上有两张电话卡，一张是接收验证码用的，而短信转发用的软件是mysms，不巧的是这款软件在ios端无法批量删除短信，好在可以在PC上的web页面处理，可惜仍无法批量操作，所以就有了下面这个简单的小脚本程序内容：123456789101112from pykeyboard import *from pymouse import *import timem=PyMouse()k=PyKeyboard()for i in range(50): m.click(254,642,2) time.sleep(1) m.click(304,728,1) time.sleep(1) k.tap_key(k.enter_key) time.sleep(4) 很简单的一段程序，但是可以批量的完成一些重复的工作，比如删短信。 脚本使用前提安装pyhookhttps://www.lfd.uci.edu/~gohlke/pythonlibs/根据Python版本下载对于的whl文件pyHook‑1.5.1‑cp37‑cp37m‑win_amd64.whlpip install pyHook‑1.5.1‑cp37‑cp37m‑win_amd64.whl 安装pyuserinputpip install pyuserinput 一些方法介绍（搬运）鼠标操作：m.click(x,y,button,n) 鼠标点击x,y 是坐标位置buttong 1表示左键，2表示点击右键n 点击次数，默认是1次，2表示双击 m.move(x,y) –鼠标移动到坐标(x,y)坐标可以通过QQ截图获取，在左上角开始点击，然后移动到需要点击位置就可以获取了x_dim, y_dim = m.screen_size() –获得屏幕尺寸 键盘操作：k.type_string(‘Hello, World!’) –模拟键盘输入字符串k.press_key(‘H’) –模拟键盘按H键k.release_key(‘H’) –模拟键盘松开H键k.tap_key(“H”) –模拟点击H键k.tap_key(‘H’,n=2,interval=5) –模拟点击H键，2次，每次间隔5秒k.tap_key(k.function_keys[5]) –点击功能键F5k.tap_key(k.numpad_keys[5],3) –点击小键盘5,3次 联合按键模拟例如同时按alt+tab键盘k.press_key(k.alt_key) –按住alt键k.tap_key(k.tab_key) –点击tab键k.release_key(k.alt_key) –松开alt键]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[华硕ZX50JX4200黑苹果DSDT/SSDT修补总结(持续更新)]]></title>
+    <url>%2F2019%2F10%2F19%2F%E5%8D%8E%E7%A1%95ZX50JX4200%E9%BB%91%E8%8B%B9%E6%9E%9CDSDT-SSDT%E4%BF%AE%E8%A1%A5%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[提取建议制作Ubuntu的U盘启动提取 反编译使用iasl 联合反编译将提取的原始 dsdt和ssdt文件重命名为xxx.aml（xxx为原始文件名） 一键改名命令for i in *;do mv &quot;$i&quot; &quot;$i.aml&quot;;done 反编译命令iasl -da -dl *.aml删除所有aml文件，只保留dsl文件rm *.aml 改错不同设备或不同版本的bios可能提取的到文件反编译后错误不同，这里只总结了我遇到的错误 dsdt文件错误修复1.PARSEOP_ZERO错误 使用Rehubman补丁源的“Fix PARSEOP_ZERO Error”2.提示‘}’错误 删除对应行的行Arg0然后就没有错误了 但提示警告，不用理会 SSDT2错误修复123456789Package (0x06) &#123; 0x80000000, 0x80000000, 0x80000000, 0x80000000, 0x80000000, 0x80000000 &#125; 这种错误使用派奇的补丁源的”SSDT_Package(){0x80000000}_Eror_Fix“修复补丁地址1派奇 http://raw.github.com/Yuki-Judai/dxxs-DSDT-Patch/master SSDT3错误修复cpupm变频文件 删除该dsl 使用脚本生成并代替该文件脚本GitHub地址https://github.com/Piker-Alpha/ssdtPRGen.sh SSDT9错误修复PARSEOP_NAMESEG错误 使用[gfx0]Cleanup/Fix Errors(SSDT)修复 打补丁除补充说明外，默认补丁源在RehubMan的笔记本补丁源 改名补丁(理论上需要所有的文件都要改名)1.GFX0-&gt;IGPU 需要的文件（DSDT、SSDT5、SSDT6、SSDT9）2.B0D3-&gt;HDAU 需要的文件（SSDT、SSDT5)3._DSM-&gt;XDSM 显卡补丁位于ssdt5“[igpu]Haswell HD4400/HD4600/HD5000“ DSDT通用补丁1.屏蔽独显Disable fromm _REG(DSDT)Disable/Enable on _WAK/_PTS(DSDT) 2.修复睡眠[sys]Fix _WAK Arg0 v2[sys]Fix _WAK IAOE 3.电源管理[sys]Haswell LPC 4.电量修复[sys]Fix Mutex with non-zero Synclevel派奇：[bat]ASUS N550/N551(JX JV) 5.USB内建[usb]7-series/8-series USB 6.键盘灯(快捷键)点击这里的链接 7.其他修复HPET fixIRQ fixRTC fix]]></content>
+      <categories>
+        <category>黑苹果</category>
+      </categories>
+      <tags>
+        <tag>DSDT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[黑苹果之华硕笔记本键盘灯和Fn快捷键]]></title>
+    <url>%2F2019%2F10%2F18%2F%E9%BB%91%E8%8B%B9%E6%9E%9C%E4%B9%8B%E5%8D%8E%E7%A1%95%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%94%AE%E7%9B%98%E7%81%AF%E5%92%8CFn%E5%BF%AB%E6%8D%B7%E9%94%AE%2F</url>
+    <content type="text"><![CDATA[驱动华硕笔记本的键盘灯和快捷键需要两步 第一步：修改DSDTHaswell机型打开反编译好的DSDT,搜索“Device (ATKD)”，在其定义下加入以下代码（包含关系）：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152Name (BOFF, Zero) Method (SKBL, 1, NotSerialized) &#123; If (Or (LEqual (Arg0, 0xED), LEqual (Arg0, 0xFD))) &#123; If (And (LEqual (Arg0, 0xED), LEqual (BOFF, 0xEA))) &#123; Store (Zero, Local0) Store (Arg0, BOFF) &#125; Else &#123; If (And (LEqual (Arg0, 0xFD), LEqual (BOFF, 0xFA))) &#123; Store (Zero, Local0) Store (Arg0, BOFF) &#125; Else &#123; Return (BOFF) &#125; &#125; &#125; Else &#123; If (Or (LEqual (Arg0, 0xEA), LEqual (Arg0, 0xFA))) &#123; Store (KBLV, Local0) Store (Arg0, BOFF) &#125; Else &#123; Store (Arg0, Local0) Store (Arg0, KBLV) &#125; &#125; Store (DerefOf (Index (PWKB, Local0)), Local1) ^^PCI0.LPCB.EC0.WRAM (0x04B1, Local1) // Haswell/Ivy ^^PCI0.LPCB.EC0.WRAM (0x044B, Local1) // Sandy/Ivy Return (Local0) &#125; Method (GKBL, 1, NotSerialized) &#123; If (LEqual (Arg0, 0xFF)) &#123; Return (BOFF) &#125; Return (KBLV) &#125; Skylake机型打开反编译好的DSDT,搜索“Method (SCDG, 1, NotSerialized)”，在这个method下方加入以下代码（注并列关系）：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152Name (BOFF, Zero) Method (SKBL, 1, NotSerialized) &#123; If (Or (LEqual (Arg0, 0xED), LEqual (Arg0, 0xFD))) &#123; If (And (LEqual (Arg0, 0xED), LEqual (BOFF, 0xEA))) &#123; Store (Zero, Local0) Store (Arg0, BOFF) &#125; Else &#123; If (And (LEqual (Arg0, 0xFD), LEqual (BOFF, 0xFA))) &#123; Store (Zero, Local0) Store (Arg0, BOFF) &#125; Else &#123; Return (BOFF) &#125; &#125; &#125; Else &#123; If (Or (LEqual (Arg0, 0xEA), LEqual (Arg0, 0xFA))) &#123; Store (KBLV, Local0) Store (Arg0, BOFF) &#125; Else &#123; Store (Arg0, Local0) Store (Arg0, KBLV) &#125; &#125; Store (DerefOf (Index (KBPW, Local0)), Local1) ^^PCI0.LPCB.EC0.WRAM (0x04B1, Local1) Return (Local0) &#125; Name (KBPW, Buffer (0x10) &#123; 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF &#125;) Method (GKBL, 1, NotSerialized) &#123; If (LEqual (Arg0, 0xFF)) &#123; Return (BOFF) &#125; Return (KBLV) &#125; 第二步 加载驱动将AsusNBFnKeys.kext放到Clover/kexts/other内 重启即可]]></content>
+      <categories>
+        <category>黑苹果</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Git技巧总结(持续更新)]]></title>
+    <url>%2F2019%2F10%2F17%2FGit%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%2F</url>
+    <content type="text"><![CDATA[1.git设置快捷脚本1git config --global alias.bp &apos;!hexo clean;hexo g;gulp g;hexo d&apos; 然后使用 git bpush 就可以一键更新博客并发布了(cd 后面的目录为你的博客文件目录）取消方式1git config --global --unset alias.bpush 2.git快速push(推荐使用方法二)方法一1git config --global alias.fp &apos;!git add .;git commit -m &quot;快速push&quot;;git push&apos; 使用方式输入 git fp 就可以直接三连，但是无法手写commit信息 方法二更新 2020年04月20日23:36:29 在win系统下可以在项目目录添加一个批处理文件来实现一键推送，同时可以输入commit信息（推荐使用n++或者sublime工具编辑，并且将编码修改为ANSI)bat内容如下12345git add .set /p m=输入更新内容git commit -m %m%git pushpause ####mac系统或则linux系统添加一个shell脚本来实现同样的功能。代码如下12345git add .echo 输入更新内容read mgit commit -m $mgit push 此时我们的项目目录就会多出我们添加的脚本文件，如何忽略它呢，其实很简单，只需要打开项目目录的 .gitignore 文件（隐藏文件，没有就新建一个）添加我们的脚本工具的文件名就可以。]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[黑苹果之仿冒白苹果鼠标]]></title>
+    <url>%2F2019%2F10%2F17%2F%E9%BB%91%E8%8B%B9%E6%9E%9C%E4%B9%8B%E4%BB%BF%E5%86%92%E7%99%BD%E8%8B%B9%E6%9E%9C%E9%BC%A0%E6%A0%87%2F</url>
+    <content type="text"><![CDATA[仿冒好处如果你的鼠标有侧键，可以启用侧键的功能 需要工具1.PlistEdit2.Clover Configurator 正式过程1.查看关于本机-硬件-USB 查找鼠标对应的产品ID(idProduct)和厂商ID(idVendor),记录下来并转为10进制 2.将记录的10进制填入下面文本对应的地方（每个值对应2个地方,第22、24行和239、241行）123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&lt;plist version=&quot;1.0&quot;&gt;&lt;dict&gt; &lt;key&gt;IOKitPersonalities&lt;/key&gt; &lt;dict&gt; &lt;key&gt;WiredMouse-1&lt;/key&gt; &lt;dict&gt; &lt;key&gt;CFBundleIdentifier&lt;/key&gt; &lt;string&gt;com.apple.driver.AppleUSBHIDMouse&lt;/string&gt; &lt;key&gt;HIDDefaultBehavior&lt;/key&gt; &lt;string&gt;Mouse&lt;/string&gt; &lt;key&gt;IOClass&lt;/key&gt; &lt;string&gt;AppleHIDMouse&lt;/string&gt; &lt;key&gt;IOProviderClass&lt;/key&gt; &lt;string&gt;IOUSBInterface&lt;/string&gt; &lt;key&gt;bConfigurationValue&lt;/key&gt; &lt;integer&gt;1&lt;/integer&gt; &lt;key&gt;bInterfaceNumber&lt;/key&gt; &lt;integer&gt;0&lt;/integer&gt; &lt;key&gt;idProduct&lt;/key&gt; &lt;integer&gt;100&lt;/integer&gt; &lt;key&gt;idVendor&lt;/key&gt; &lt;integer&gt;7847&lt;/integer&gt; &lt;/dict&gt; &lt;key&gt;WiredMouseAccel-1&lt;/key&gt; &lt;dict&gt; &lt;key&gt;AppleHIDMouseVersion&lt;/key&gt; &lt;integer&gt;256&lt;/integer&gt; &lt;key&gt;CFBundleIdentifier&lt;/key&gt; &lt;string&gt;com.apple.iokit.IOHIDFamily&lt;/string&gt; &lt;key&gt;HIDAccelCurves&lt;/key&gt; &lt;array&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;65536&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;0&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;524288&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;5243&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;70124&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;26214&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;8192&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;537395&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;1245184&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;6554&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;74711&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;36045&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;32768&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;543949&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;1179648&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;7864&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;79299&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;46531&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;45056&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;550502&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;1114112&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;9830&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;83886&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;57672&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;57344&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;557056&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;1048576&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;11796&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;88474&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;69468&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;65536&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;563610&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;983040&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;14418&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;93061&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;81920&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;98304&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;570163&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;917504&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;17695&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;97649&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;95027&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;131072&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;576717&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;851968&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;21627&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;102236&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;108790&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;163840&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;583270&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;786432&lt;/integer&gt; &lt;/dict&gt; &lt;dict&gt; &lt;key&gt;HIDAccelGainCubic&lt;/key&gt; &lt;integer&gt;26214&lt;/integer&gt; &lt;key&gt;HIDAccelGainLinear&lt;/key&gt; &lt;integer&gt;104858&lt;/integer&gt; &lt;key&gt;HIDAccelGainParabolic&lt;/key&gt; &lt;integer&gt;123208&lt;/integer&gt; &lt;key&gt;HIDAccelIndex&lt;/key&gt; &lt;integer&gt;196608&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedLinear&lt;/key&gt; &lt;integer&gt;589824&lt;/integer&gt; &lt;key&gt;HIDAccelTangentSpeedParabolicRoot&lt;/key&gt; &lt;integer&gt;786432&lt;/integer&gt; &lt;/dict&gt; &lt;/array&gt; &lt;key&gt;HIDDisallowRemappingOfPrimaryClick&lt;/key&gt; &lt;true/&gt; &lt;key&gt;HIDScrollAccelerationTable&lt;/key&gt; &lt;data&gt; AACAAFVTQioACAAAAAAAAQABAAAAAKAAAAAgAAARAACAAAABITgA APd3AAMEhQABkREABbM1AAIzMwAIjM8AAxmaAA0+ggAECIkAExyh AAT3dwAZ0VcABiIiACKz/AAHm7kAL60rAAkL5ABAlHUACubxAFm3 6AAMzfUAcQCiAA8nmwCKvFgAEdQ+AKNZoQAUyDoAwOAEABfUJwDY opEAG0+XAPCMwAAAUAAAEQAAgAAAAkgLAADu7wAFB4kAAWZmAAg2 +QACGZoADROXAALERAARml4AA5ERABciqAAEqqsAH4SMAAXVVQAp EtwAB1gvADlNsAAI+gEASsYnAArm8QBkfA4ADM31AH6QEgAPJ5sA m2JOABHUPgC2878AFQGcANyUtgAYFoAA+RU7ABtPlwENanAAAIAA ABEAAHd3AAP8iwAA5mYAB2dLAAFMzQALY9UAAczNAA+pRQACgAAA Fez7AANVVQAceZUABMzNACjcjQAGREQANfVWAAd3dwBC3IcACPd3 AFP6RgAK5vEAcIrxAAzN9QCNwBQADyebAK4HtAAR1D4AzOgJABUO wgD2msAAGCOmARWVwAAbT5cBLb7kAACwAAARAACIiQAHrbYAAPd3 AA0+ggABd3cAExyhAAIIiQAZUJYAAszNACGyegADzM0AKxXgAATu 7wA1pbIABhERAEDhMAAHme8AUcnXAAkQqwBjyIMACs/hAIEhmgAM zfUAnsKmAA8nmwDC6egAEgcEAOyw1QAVDsIBExtGABg8dQE2zfoA GwY+AUv0OgAA4AAAEQAAgAAACyXBAAD6sQAXwo4AAXgJACAlVgAC HyoAKTsFAALwEwAztn8AA/ixAD+XxgAFAVAAShNBAAYztgBV9IgA B1gvAGM7mgAI3d4AdvcJAAqzMwCV8gkADOQyALnh/gAPJ5sA2k2o ABHUPgEBCNoAFP1bASmGugAYJnkBUgSeABrppwFjp94AAQAAABEA ACqrAA2aKgAAbu8AG1SSAADd3gApDvoAAYiJADUF/QAClmEAQF4p AAOLXgBMUmQABKSmAFkyBgAF0BUAZSZBAAcx9AB2nuYACK+5AIkC 8QAKszMAp/BcAAzkMgDQMFAADyebAPR/7wAR1D4BH+D0ABT9WwFN OrwAGCZ5AXqUiAAa6acBjlWcAAGzMwARAAAqqwAPPAYAAG7vAB6c KQAA3d4ALfxLAAGIiQA7Yt4AApZhAEgXigADi14AVXsAAASkpgBj 5hsABdAVAHFJkQAHMfQAhNrtAAivuQCZc+8ACrMzALwXcQAM5DIA 6SvfAA8nmwER1vgAEdQ+AUJslgAU/VsBdTeKABgmeQGoAoQAGumn Ab4icg== &lt;/data&gt; &lt;key&gt;HIDScrollAccelerationTableX&lt;/key&gt; &lt;data&gt; AACAAFVTQioACAAAAAAAAQABAAAAAQAAAAAgAAARAACAAAACGcMA AQAAAAQq2wABd3cAB4BXAAIzMwAPfbMAAyqrABki6QAEEREAIeel AAUZmgAqYY4ABmZmADX7bgAHzM0AQ3pJAAlVVQBUNk8ACwAAAGel TQAM3d4AfcwjAA8zMwCaeMkAEd3eALqW3AAU5mYA23dyABfd3gD5 ZcEAGyIiARiOHAAAUAAADwAAgAAABDOHAAEAAAAKdCgAAgAAABkc CQADREQAKISDAASiIgA1EogABhERAER7AgAHzM0AVivaAAkZmgBm JmwACqIiAHqxuQAMZmYAkYVkAA73dwCw6G8AEZERANDdkgAVCIkA +D3nABgREQEXoPIAGxmaATakNgAAgAAADwAAgAAACBo6AAEIiQAU eswAAfd3ACNrCwADEREAM3TgAARMzQBC06EABcREAFQznQAHZmYA Zj6tAAk7vAB8TDEACxERAJRa8AANGZoArxX9AA87vADKfB4AEhER AO/oZAAVGZoBFVSqABgiIgE1aFIAGxmaAVS6UAAAsAAADwAAgAAA EDR1AAEIiQAeVxsAAczNAC2CqQAC1VUAPvS/AAP3dwBRKQMABYAA AGZl/AAHVVUAfel+AAk7vACW8VsACvd3AKzwggAM93cAyD7nAA9E RADl09UAEgiJAQyC5AAVEREBMzH0ABgIiQFTDWoAGxmaAXLQagAA 4AAADwAAgAAAGAHcAAEIiQAoNlEAAaqrADghJgACmZoAS9nEAAOz MwBhFr4ABTMzAHlcbQAG5mYAkyZ4AAiZmgCsLlQACoiJAMd8ugAM oiIA5RGoAA8REQEEKvAAEgAAASxeWgAVEREBUYkQABgzMwF0bTwA GxERAZDmhAABAAAADwAAgAAAIBwXAAEAAAA0Nz8AAZmaAEVwCwAC d3cAWkTbAAN3dwBvGasABPd3AIxrGwAGmZoAqPcIAAhu7wDHDfwA CkREAOLUZwAMZmYBAzviAA8ZmgEqlPoAEgiJAVUEHAAVGZoBfSK2 ABg7vAGke84AGwAAAcKK/AABszMAEAAAgAAAKB1XAAEAAABALvIA AXd3AFK8yQACEREAZBh0AAMZmgB/3fAABHd3AJ0zfQAFmZoAtISe AAbERADMlkwACCIiAObpowAJ1VUBBD8wAAwiIgErW+wADqqrAU92 cgARszMBfJeaABT3eAGpuMAAF+7vAdDVfAAbAAAB9C90 &lt;/data&gt; &lt;key&gt;HIDScrollResolution&lt;/key&gt; &lt;integer&gt;2818048&lt;/integer&gt; &lt;key&gt;HIDScrollResolutionX&lt;/key&gt; &lt;integer&gt;2818048&lt;/integer&gt; &lt;key&gt;IOClass&lt;/key&gt; &lt;string&gt;IOHIDEventDriver&lt;/string&gt; &lt;key&gt;IOHIDScrollReportRate&lt;/key&gt; &lt;integer&gt;8192000&lt;/integer&gt; &lt;key&gt;IOProviderClass&lt;/key&gt; &lt;string&gt;IOHIDInterface&lt;/string&gt; &lt;key&gt;ProductID&lt;/key&gt; &lt;integer&gt;100&lt;/integer&gt; &lt;key&gt;VendorID&lt;/key&gt; &lt;integer&gt;7847&lt;/integer&gt; &lt;/dict&gt; &lt;/dict&gt;&lt;/dict&gt;&lt;/plist&gt; 3.新建一个1.plist。然后将修改后的代码复制粘贴进去。打开保存后，鼠标右键点击1.plist，打开方式选择PlistEdit4.如下图所示，复制WiredMouse-1和WiredMouseAccel-1 5.如下图所示，用PlistEdit打开FakeSMC.kext，找到IOKitPersonalities，然后看下图提示 6.插入后应该是下图的样子 7.保存放入clover/kexts/other替换-重建缓存-重启即可成功效果图]]></content>
+      <categories>
+        <category>黑苹果</category>
+      </categories>
+      <tags>
+        <tag>技巧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[修改transmission配置，实现远程访问transmission]]></title>
+    <url>%2F2019%2F09%2F03%2F%E4%BF%AE%E6%94%B9transmission%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE%2F</url>
+    <content type="text"><![CDATA[前言如果没有修改下面设置也是能打开transmission的web界面，但是你会发现一片空白，提示正在连接服务器。transmission实现远程访问要开启rpc-authentication-required 设置方法找到transmission安装目录内的settings.json文件使用notepad++或者sublime等文本编辑软件打开修改以下地方：（大约在第43行开始）1.将rpc-authentication-required和rpc-enabled修改为true，启用认证功能2.rpc-username后设置为你的登录用户名3.rpc-password后设置为你的密码4.其他的就按下面的配置修改即可1234567891011&quot;rpc-authentication-required&quot;: true,&quot;rpc-bind-address&quot;: &quot;0.0.0.0&quot;,&quot;rpc-enabled&quot;: true,&quot;rpc-host-whitelist&quot;: &quot;&quot;,&quot;rpc-host-whitelist-enabled&quot;: true,&quot;rpc-password&quot;: &quot;123456&quot;,&quot;rpc-port&quot;: 9091,&quot;rpc-url&quot;: &quot;/transmission/&quot;,&quot;rpc-username&quot;: &quot;admin&quot;,&quot;rpc-whitelist&quot;: &quot;&quot;,&quot;rpc-whitelist-enabled&quot;: false, 这个配置的用户名为admin 密码为123456注：密码修改后重启transmission，然后打开settings.json文件，rpc-password会变成了一串加密密钥。]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>防痴呆</tag>
+        <tag>transmission</tag>
+        <tag>远程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS更换国内yum源]]></title>
+    <url>%2F2019%2F08%2F28%2FCentOS%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85yum%E6%BA%90%2F</url>
+    <content type="text"><![CDATA[每次都去百度地址太费劲了，所以整理一下地址 更换方法1.备份默认yum源12cd /etc/yum.repos.dmv CentOS-Base.repo CentOS-Base.repo.bak 2.下载更换国内yum源阿里12wget http://mirrors.aliyun.com/repo/Centos-7.repomv Centos-7.repo CentOS-Base.repo 网易12wget http://mirrors.163.com/.help/CentOS7-Base-163.repomv CentOS7-Base-163.repo CentOS-Base.repo 3.清理缓存1yum clean all 4.重建缓存1yum makecache]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>防痴呆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Mac OS 下Sublime Text 3 编译C++]]></title>
+    <url>%2F2019%2F06%2F27%2FSublime-Text-3-%E6%96%B0%E5%BB%BA%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%BB%98%E8%AE%A4%E4%BF%9D%E5%AD%98%E7%9B%AE%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[设置步骤 1.工具-&gt;编译系统-&gt;新建编译系统然后将下面的内容复制到新打开的文件保存时的文件名为XXX.sublime-build ,其中XXX为工具-&gt;编译系统中显示的文件名 Mac下的编译系统文件1234567891011121314&#123; &quot;cmd&quot;: [&quot;g++&quot;, &quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;&quot;], &quot;file_regex&quot;: &quot;^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$&quot;, &quot;working_dir&quot;: &quot;$&#123;file_path&#125;&quot;, &quot;selector&quot;: &quot;source.c, source.c++&quot;, &quot;variants&quot;: [ &#123; &quot;name&quot;: &quot;Run&quot;, &quot;cmd&quot;: [&quot;bash&quot;, &quot;-c&quot;, &quot;g++ -std=c++11 &apos;$&#123;file&#125;&apos; -o &apos;a&apos; &amp;&amp; open -a terminal &apos;$&#123;file_path&#125;/a&apos;&quot;] &#125; ]&#125; Win10下的编译系统文件：1234567891011121314&#123; &quot;encoding&quot;: &quot;utf-8&quot;, &quot;working_dir&quot;: &quot;$file_path&quot;, &quot;shell_cmd&quot;: &quot;g++ -Wall \&quot;$file_name\&quot; -o \&quot;$file_base_name\&quot;&quot;, &quot;file_regex&quot;: &quot;^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$&quot;, &quot;selector&quot;: &quot;source.c++&quot;, &quot;variants&quot;: [ &#123; &quot;name&quot;: &quot;Run&quot;, &quot;shell_cmd&quot;: &quot;g++ -Wall \&quot;$file\&quot; -o \&quot;$file_base_name\&quot; &amp;&amp; start cmd /c \&quot;\&quot;$&#123;file_path&#125;/$&#123;file_base_name&#125;\&quot; &amp; pause\&quot;&quot; &#125; ]&#125; Sublime Text 3 新建编译系统的默认保存目录要先显示隐藏的目录和文件 MAC OS⁩ ▸ ⁨用户⁩ ▸ ⁨xxx ▸ ⁨资源库⁩ ▸ ⁨Application Support⁩ ▸ ⁨Sublime Text 3⁩ ▸ ⁨Packages⁩ ▸ ⁨User⁩注：MAC OS修改为你的磁盘名sxz修改为你的用户名]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>防痴呆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[清除Win10系统Windows Defender中病毒扫描记录]]></title>
+    <url>%2F2019%2F06%2F23%2F%E6%B8%85%E9%99%A4Win10%E7%B3%BB%E7%BB%9FWindows-Defender%E4%B8%AD%E7%97%85%E6%AF%92%E6%89%AB%E6%8F%8F%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[在使用一些小工具，小软件的时候 ⁨Windows Defender⁩经常提示木马或者病毒，而扫描到的病毒记录又没有清除按钮，让一些强迫症患者很难受。终于找到了扫描的历史记录位置，终于可以告别右下角的黄色叹号了。文件位置C:\ProgramData⁩\Microsoft⁩\Windows Defender⁩\Scans⁩\History⁩\Service⁩\DetectionHistory⁩ProgramData⁩十个隐藏目录，查看隐藏目录也很简单，鼠标点两下就可以。]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>防痴呆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Centos配置本地yum源]]></title>
+    <url>%2F2019%2F06%2F19%2FCentos%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0yum%E6%BA%90%2F</url>
+    <content type="text"><![CDATA[一、挂载镜像文件12mkdir /mnt/cdrommount /dev/cdrom /mnt/cdrom 二、修改yum源配置文件123cd /etc/yum.repo.drm -rf *.repovi /etc/yum.repo.d/Localyum.repo 内容为：12345[localyum]name=localyumbaseurl=file:///mnt/cdromgpgcheck=0enabled=1 三、清空并重建缓存12yum clean allyum makecache]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux下LVM及磁盘配额管理]]></title>
+    <url>%2F2019%2F04%2F22%2FLinux%E4%B8%8BLVM%E5%8F%8A%E7%A3%81%E7%9B%98%E9%85%8D%E9%A2%9D%E7%AE%A1%E7%90%86%2F</url>
+    <content type="text"><![CDATA[一、实验目的1.理解磁盘配额管理的概念和应用；掌握磁盘配额管理的命令；2.理解LVM与普通磁盘分区的区别，掌握逻辑卷的创建、扩容等。 二、实验内容1.LVM练习：（1） 新添加2块SCSI硬盘设备（每块8G），每块硬盘创建两个分区，每个分区4G（假设为sdb1,sdb2,sdc1,sdc2）；（2） 每个分区创建物理卷PV；（3） 创建卷组myvg,包含分区sdb1和sdc1；（4） 在卷组myvg上创建逻辑卷mylv（大小为4G），并基于该逻辑卷建立EXT4文件系统；（5） 扩充mylv逻辑卷到大小为6G，并查看该逻辑卷； 2.磁盘配额管理（1） 将上题中的文件系统设置开机后自动挂载，并开启用户、组磁盘配额管理；（2） 添加用户组accp，以及该组中的用户jerry（密码为jerry）（3） 限制用户jerry最多只能使用50M磁盘空间， 当使用磁盘空间超过30M时，10天内给出警告；限制accp组的用户合计最多只能使用500M磁盘空间（4） 使用dd命令创建文件验证用户jerry的配额限制；（5） 使用quota –u ……和repquota ….查看用户配额设置和磁盘使用情况。 ##三、实验命令 LVM练习： 详情见上一篇博客 每个分区创建物理卷PV； 123456pvcreate /dev/sdb1pvcreate /dev/sdb2pvcreate /dev/sdc1pvcreate /dev/sdc2或者pvcreate /dev/sdb1 /dev/sdb2 /dev/sdc1 /dev/sdc2 创建卷组myvg,包含分区sdb1和sdc1；vgcreate myvg /dev/sdb1 /dev/sdc1 在卷组myvg上创建逻辑卷mylv（大小为4G），并基于该逻辑卷建立EXT4文件系统； 12lvcreate -L 4G -n mylv myvgmkfs.ext4 /dev/myvg/mylv 扩充mylv逻辑卷到大小为6G，并查看该逻辑卷； 12lvextend -L +2G /dev/myvg/mylvlvscan 磁盘配额管理 将上题中的文件系统设置开机后自动挂载，并开启用户、组磁盘配额管理； 1234mkdir /mnt/mylvvi /etc/fstab在最后一行添加下面内容/dev/myvg/mylv /mnt/mylv ext4 defaults,usrquota,grpquota 1 2 添加用户组accp，以及该组中的用户jerry（密码为jerry）groupadd accpuseradd -g accp -p jerry jerry 限制用户jerry最多只能使用50M磁盘空间， 当使用磁盘空间超过30M时，10天内给出警告；限制accp组的用户合计最多只能使用500M磁盘空间 1234567891011121314先创建磁盘配额管理文件quotacheck -avug本别编辑用户和用户组的磁盘配额管理文件edquota -u jerry修改soft下值为 30720修改hard下值为 51200edquota -g accp修改hard下值为 512000edquota -t修改Block grace period下值为10days 使用dd命令创建文件验证用户jerry的配额限制；dd if=/dev/zero bs=1M count=33 of=/mnt/mylv/testfile1 使用quota –u和repquota查看用户配额设置和磁盘使用情况。略]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo博客添加Live2D小宠物]]></title>
+    <url>%2F2019%2F04%2F18%2Fhexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0Live2D%E5%B0%8F%E5%AE%A0%E7%89%A9%2F</url>
+    <content type="text"><![CDATA[在博客搭建之初这个插件我就用上了，时间久了，难免有些视觉疲劳，所以打算换个宠物。 项目地址预览地址 一、安装Live2D插件12npm install --save hexo-helper-live2dnpm install xxxxx //xxxxx是包名 下面是提供安装的列表，12345678910111213141516171819202122live2d-widget-model-chitoselive2d-widget-model-epsilon2_1live2d-widget-model-gflive2d-widget-model-haru/01 (use npm install --save live2d-widget-model-haru)live2d-widget-model-haru/02 (use npm install --save live2d-widget-model-haru)live2d-widget-model-harutolive2d-widget-model-hibikilive2d-widget-model-hijikilive2d-widget-model-izumilive2d-widget-model-koharulive2d-widget-model-mikulive2d-widget-model-ni-jlive2d-widget-model-nicolive2d-widget-model-nietzschelive2d-widget-model-nipsilonlive2d-widget-model-nitolive2d-widget-model-shizukulive2d-widget-model-tororolive2d-widget-model-tsumikilive2d-widget-model-unitychanlive2d-widget-model-wankolive2d-widget-model-z16 二、修改配置文件在博客根目录的_config.yml配置文件中添加下面的内容1234567891011121314151617#Live2D动画live2d: enable: true scriptFrom: local pluginRootPath: live2dw/ pluginJsPath: lib/ pluginModelPath: assets/ tagMode: false debug: false model: use: live2d-widget-model-shizuku display: position: right width: 150 height: 300 mobile: show: true 主要参数说明 enable //是否使用 model: use: live2d-widget-model-shizuku //要使用的模型名称 display: position: right //显示的位置 width: 150 //宽度 height: 150 //高度mobile: show: true //移动端是否显示##三、重新编译静态页面下面的步骤就是Hexo三连123hexo cleanhexo ghexo d]]></content>
+      <categories>
+        <category>博客教程</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux下磁盘分区格式化]]></title>
+    <url>%2F2019%2F04%2F15%2FLinux%E4%B8%8B%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E6%A0%BC%E5%BC%8F%E5%8C%96%2F</url>
+    <content type="text"><![CDATA[一、实验目的 了解linux系统支持的常用文件系统 掌握磁盘分区、格式化，以及磁盘分区挂载的相关命令和操作。 二、实验内容背景：某公司中的Linux服务器中新增了一块硬盘/dev/sdb（大小6G），练习Linux系统下磁盘分区、文件系统的创建、挂载与卸载及自动挂载的实现。在RHEL的虚拟机中添加一个新硬盘（6G大小），进行如下操作： 查看/dev目录下的磁盘文件情况； 使用fdisk命令新建/dev/sdb1主分区和/dev/sdb2扩展分区，并在扩展分区中新建逻辑分区/dev/sdb5和/dev/sdb6（每个分区大小为2G），分区完成后查看分区信息； 删除逻辑分区sdb6, 然后查看分区情况； 使用mkfs命令为sdb1主分区创建xfs文件系统，为sdb5创建ext4文件系统， 用fsck命令检查这两个文件系统； 用mount命令挂载sdb1到/mnt目录下的同名文件夹/mnt/sdb1中； 查看挂载情况，并卸载sdb1分区； 设置把这两个文件系统每次启动系统时自动挂载到/mnt中的同名文件夹/mnt/sdb1和/mnt/sdb5下。 三、实验步骤和实验过程(包含关键截图) 查看/dev目录下的磁盘文件情况ls /dev 创建2G的主分区fdisk /dev/sdbn p +2G //这里的命令是交互式的 注意屏幕的输出提示 创建拓展分区n e +4G //这里的命令是交互式的 注意屏幕的输出提示 创建2个大小为2G的逻辑分区n l +2G //这里的命令是交互式的 注意屏幕的输出提示 查看分区情况p 删除sdb6 分区d 6 //这里的命令是交互式的 注意屏幕的输出提示 格式化分区mkfs -c type /dev/sdb1mkfs.ext /dev/sdb1 //两者均可 检查分区fsck /dev/sdb1xfs_repair -f /dev/sdb1 //fsck不可检查xfs分区 挂载分区mkdir /mnt/sdb1mount /dev/sdb1 /mnt/sdb1 //要挂载到一个空文件夹 卸载分区umount /dev/sdb1umount /mnt/sdb1 配置开机自动挂载vi /etc/fstab添加/dev/sdb1 /mnt/sdb1 xfs default 0 0]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Docker神器之迅雷远程下载(群辉 & Linux)]]></title>
+    <url>%2F2019%2F04%2F15%2FDocker%E7%A5%9E%E5%99%A8%E4%B9%8B%E8%BF%85%E9%9B%B7%E8%BF%9C%E7%A8%8B%E4%B8%8B%E8%BD%BD(%E7%BE%A4%E8%BE%89%20%26%20Linux)%2F</url>
+    <content type="text"><![CDATA[镜像作者Docker链接 2019-10-16 19:45:58 更新现在迅雷远程速度很慢，而且设备code也不一定能获取到了，所以不推荐使用了！ 群辉下安装和使用一、Docker下载迅雷远程镜像注册表搜索 thunder-xware 并下载箭头指向的镜像:yinheli/docker-thunder-xware 二、安装镜像 勾选使用高权限执行容器 点击高级设置 在卷属性卡中点击添加文件，并选择你期望远程迅雷的下载位置（自定义） 装载路径为 /TDDOWNLOAD （不可更改！！！） 网络选择左下角的与Docker Host使用相同的网络 点击应用创建容器 点开Docker页面左侧的容器选项卡，点击刚创建的容器，然后点击左上角的详情 在弹出的页面中选择日志选项卡，找到最下面的THE ACTIVE CODE IS: aabbcc ,记录后面的代码 点击这个链接http://yuancheng.xunlei.com) 登陆迅雷后输入刚才得到的代码即可。 Linux系统下安装和使用一、安装Docker下载迅雷远程镜像关于Docker的安装不在多说，请自行搜索安装教程在终端中输入docker pull yinheli/docker-thunder-xware:latest 下载镜像 二、安装镜像mkdir data 创建一个文件夹用于存放迅雷下载的资源12345docker run -d --privileged=true \ --name=xware \ --net=host \ -v &lt;自己选择要存放的位置&gt;:/app/TDDOWNLOAD \ yinheli/docker-thunder-xware 注意这里命令中的data就是上面创建的文件夹，如果不同名记得修改命令中的地址docker ps //查看当前运行的容器docker logs xware //查看迅雷远程的日志在日志的后几行会看到THE ACTIVE CODE IS: aabbcc这样一行代码，记录后面的代码。也就是设备CODE点击这个链接http://yuancheng.xunlei.com 登陆迅雷后输入刚才得到的代码即可。]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>经验</tag>
+        <tag>Docker</tag>
+        <tag>迅雷</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo博客个性化定制]]></title>
+    <url>%2F2019%2F04%2F13%2FHexo%E5%8D%9A%E5%AE%A2%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6%2F</url>
+    <content type="text"><![CDATA[前言前段时间给博客换了个域名同时更新了博客的Next主题，最新版的7.1，之前是5.x版本。改动太多就直接clone，然后对照之前的一点点修改吧。这里简单记录一下个性化的设置。 直接在配置文件修改的地方 网站图标favicon:将图片定位到/theme/next/source/images 文章版权creative_commons:修改post属性为true 备案beian: 菜单定制menu: 社交social: 友链links: 头像avatar: 阅读全文按钮auto_excerpt:read_more_btn: 字符统计信息symbols_count_time:需要安装插件同时根目录配置文件symbols_count_time: 打赏1234reward_settings:enable: trueanimation: truecomment: 自定义显示的内容 下面位置放入你的二维码123reward:wechatpay: /images/wechatpay.jpgalipay: /images/alipay.jpg Valine评论系统 1234# Valine# You can get your appid and appkey from https://leancloud.cn# More info available at https://valine.js.orgvaline: 本地搜索local_search: 代码复制按钮codeblock: 阅读人数busuanzi_count: 这些都是我自己用到了一下配置，主题配置文件还有很多地方，大家可以去仔细看看 站点根目录配置文件和其他的地方 汉化language: zh-CN 之前版本是zh-Hans 新版本更新了 网站标题和描述title:description: 新建博文时文件名添加当前时间new_post_name: :year-:month-:day-:title.md 添加网站萌宠 https://github.com/xiazeyu/live2d-widget.jshttps://l2dwidget.js.org/docs/class/src/index.js~L2Dwidget.html#instance-method-init 给文章加密themes/next/layout/_partials/head/head.swig在第5行，也就是第一个if前添加下面代码12345678910&lt;script&gt; (function()&#123; if(&apos;&#123;&#123; page.password &#125;&#125;&apos;)&#123; if (prompt(&apos;请输入文章密码&apos;) !== &apos;&#123;&#123; page.password &#125;&#125;&apos;)&#123; alert(&apos;密码错误！&apos;); history.back(); &#125; &#125; &#125;)();&lt;/script&gt; 然后再文章开头的— —内添加password: 密码 //记得有空格 修改全局背景/theme/next/source/images目录放入你的背景图片命令为background.jpg然后在/theme/next/source/css/_custom/custom.sty中添加下面代码123456789101112131415// Custom styles.@media screen and (min-width:1200px) &#123; body &#123; background-image:url(/images/background.jpg); background-repeat: no-repeat; background-attachment:fixed; background-position:50% 50%; background-size:cover &#125; #footer a &#123; color:#eee; &#125;&#125; 暂时就想起来这么多，以后会一点点完善的关于搭建博客可以看我的另一篇文章这是链接]]></content>
+      <categories>
+        <category>博客教程</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[FRP内网穿透访问家中的NAS和路由器后台]]></title>
+    <url>%2F2019%2F04%2F11%2F%20FRP%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[前言自从入手了蜗牛星际以后，一直在折腾，先是安装了软路由，现在换成了PVE下虚拟LEDE软路由和黑群晖。可以远程访问的NAS才是一个完整的NAS,由于在宿舍大家一块用一条网线，虽然有公网地址，但联通公司不给改桥接，后来想想也挺麻烦的，而且宿舍的网线也只有4芯，即使路由器拨号也无法多播，就放弃DDNS了。于是开始研究内网穿透。 为什么要用FRP1.没钱购买花生壳的付费服务，免费的局限性太大2.学习一些新的东西 对FRP的理解感觉frp和远程代理很像，支持的底层协议也很丰富，配置相对简单，而且不需要安装。通过命令行方式启动，有一点Linux基础的用户就可以完美驾驭。作者github主页根据作者的介绍，frp的基础功能是实现远程tcp访问和ssh链接。而用的更多的确实http协议带来的远程web链接，访问家中的NAS和路由器后台。 下载以及配置直接在github页面下载即可(注意服务的与客户端的版本尽量相同)配置过程下载frp：wget https://github.com/fatedier/frp/releases/download/v0.26.0/frp_0.26.0_linux_amd64.tar.gz解压：tar -zxvf frp_0.26.0_linux_amd64.tar.gz进入解压后的文件夹：cd frp_0.26.0_linux_amd64.tar.gz编辑服务端配置文件：vi frps.ini输入i进入编辑模式i根据文章后面的内容进行具体配置编辑完成后按一下键盘左上角esc键退出编辑输入:wq保存并退出启动frp服务端并保持后台运行 （第一次测试时不需要&amp;符号即可前台运行，ctrl+c即可退出）nohup ./frps -c ./frps.ini &amp;客户端和服务端类似，不过将frps更换为frpc （这里的s就是server服务端，c就是client客户端）下载frp：wget https://github.com/fatedier/frp/releases/download/v0.26.0/frp_0.26.0_linux_amd64.tar.gz解压：tar -zxvf frp_0.26.0_linux_amd64.tar.gz进入解压后的文件夹：cd frp_0.26.0_linux_amd64.tar.gz编辑客户端配置文件：vi frpc.ini//输入i进入编辑模式i根据文章后面的内容进行具体配置编辑完成后按一下键盘左上角esc键退出编辑,保存并退出:wq 记得按esc退出编辑状态启动frp服务端并保持后台运行nohup ./frpc -c ./frpc.ini &amp; 服务端配置文件1234567891011121314151617181920212223[common] #服务器ipbind_addr = 0.0.0.0 #frp端口 bind_port = 7000#口令配置token = xxx ##frp协议和端口配置 （根据自己的需要保留即可）bind_udp_port = 7001kcp_bind_port = 7002vhost_http_port = 80 vhost_https_port = 443##frp的统计信息，可以浏览器输入http://服务器ip:7500查看，账号密码为admin，可以在下面配置中修改dashboard_addr = 0.0.0.0dashboard_port = 7500dashboard_user = admindashboard_pwd = admin ##frp日志配置 log_file = ./frps.loglog_level = infolog_max_days = 3 客户端配置文件1234567891011121314151617181920212223242526272829303132[common]####IP也可以是域名 server_addr = x.x.x.x frp服务器端口server_port = 7000#口令配置，要和服务端一致token = xxx ##frp日志配置 （根据自己的需要保留或者删除）log_file = ./frpc.loglog_level = infolog_max_days = 3#[]里面的内容自定义，建议用作标示[lede] type = httplocal_ip = 192.168.123.1 local_port = 80 custom_domains = xxx.youdomain.com [nas]type = http local_ip = 192.168.123.102 local_port = 5000 custom_domains = yyy.youdomain.com [pve]type = httpslocal_ip = 192.168.123.100local_port = 8006custom_domains = zzz.youdomain.com#这里我的客户端配置，三个域名分别对应三个不同的web页面#custom_domains是自己的域名 解决远程Transmission无法使用修改Transmission的配置文件settings.json ，启动密码登录即可（大约在第43行开始）个人猜测这个白名单在内网穿透时无效。（未经验证）1234567891011&quot;rpc-authentication-required&quot;: true, &quot;rpc-bind-address&quot;: &quot;0.0.0.0&quot;, &quot;rpc-enabled&quot;: true, &quot;rpc-host-whitelist&quot;: &quot;&quot;, &quot;rpc-host-whitelist-enabled&quot;: true, &quot;rpc-password&quot;: &quot;&#123;925c1d0775d6e63d3ccd87a8f97f48d38e9f013fupumAV6s&quot;, &quot;rpc-port&quot;: 9091, &quot;rpc-url&quot;: &quot;/transmission/&quot;, &quot;rpc-username&quot;: &quot;admin&quot;, &quot;rpc-whitelist&quot;: &quot;&quot;, &quot;rpc-whitelist-enabled&quot;: false, 总结FRP整体配置还是比较简单的，只要了解了其原理就能轻松使用。]]></content>
+      <categories>
+        <category>博客教程</category>
+      </categories>
+      <tags>
+        <tag>内网穿透</tag>
+        <tag>群晖</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[蜗牛星际之安装PVE+LEDE+群辉]]></title>
+    <url>%2F2019%2F04%2F06%2F%E8%9C%97%E7%89%9B%E6%98%9F%E9%99%85%E4%B9%8B%E5%AE%89%E8%A3%85PVE%2BLEDE%2B%E7%BE%A4%E8%BE%89%2F</url>
+    <content type="text"><![CDATA[前言上次安装了LEDE软路由后，也挂载了一个500G的硬盘，但总感觉对于J1900+4G内存来说有点浪费，还有那么大哥机箱，如果不做NAS有点对不起他的体积，在加上本来就是个矿机就尽量多压榨一下他的性能。这里只是简单些一下安装流程，不打算上传图片了，更加详细的教程可以看下面的链接蜗牛矿渣装机教程 篇一：搞定PVE虚拟机作者主页有更多的教程，一共四个系列。 一、准备1.规划IP地址按照自己的需求规划好IP地址，尽量用纸记下来，省的以后乱套。 建议将PVE地址规划为软路由lan口的子网地址 例如192.168.123.100 群辉地址也为lan口的子网地址 例如192.168.123.102(这里的102是PVE的虚拟机序号，默认是从100开始) 2.制作U盘启动两个优盘，一个装PE，一个装PVE镜像 PE直接用老毛桃即可。 用win32磁盘映像工具将pve的iso镜像写入U盘 3.恢复bios默认设置开机接键盘后按del进去bios，然后按F9恢复默认设置，然后F10保存并退出。 二、安装PVE 插入老毛桃优盘进入PE，进入后将内置16G的mSATA所有分区删除，然后建立一个新分区。NTFS格式，取消勾选ESP和EFI。 关机，拔出老毛桃U盘，插入刻录PVE镜像的优盘启动盘。 开机按F11选择UEFI开头的U盘，进入PVE安装界面 根据指示安装完成即可。(这里会提示设置PVE的IP地址、子网掩码和网关) 添加网卡桥接，默认只有一个桥接网卡，按照格式添加新的桥接网卡即可。建议备注好WAN和LAN口。因为蜗牛只有2个网卡，所以备注好WAN和LAN同时在机箱后备注好WAN和LAN。 三、安装LEDE 新建虚拟机，选择不适用任何介质，硬盘分配1G-2G即可(后面远程连接需要安装docker，所以分配够用即可)，合理配置内存与核心（1G+4cores），网卡选择E1000。 下载LEDE镜像并解压。 将img2kvm和解压后的镜像上传到PVE的root目录 root目录下指令下面命令(Linux系统当前用户目录显示为~) 12chmod +x img2kvm./img2kvm lede.img 101(虚拟机编号) lede-leader-disk(这里可以自定义的) 在虚拟机的硬件页面添加新建的磁盘文件，硬盘接口尽量选择sata 硬件添加一个新的网卡。 在选项页面调整启动顺序，将新加的文件设置为第一引导 启动虚拟机，并在控制台修改LAN口IP,然后reboot即可。 四、安装群辉 和LEDE类似，新建虚拟机，硬盘分配4G以上，配置为3G+4cores,网卡选择E1000。 同样的方法挂载引导磁盘，控制器一定要选SATA，不然无法获取IP. 调整启动顺序，将引导磁盘设置为第一启动项。 下载群辉助手，搜索，安装即可。(这一步用群辉助手搜索即可，可以挂载好硬盘再安装。) 如果搜索不到的话看一下本机IP是否在LEDE分配的网段下，因为的我网络环境是光猫拨号，直接获取到光猫分配的IP，导致无法搜索，建议在断网的环境下安装群辉。 五、群辉挂载磁盘 关闭群辉虚拟机 插入硬盘 用下面的命令查看硬盘名称 12cd /dev/disk/by-idls 复制磁盘名 用下面的命令挂载到群辉虚拟机qm set 102(群辉ID) -sataX(X为序列号，不可与之前的重复) /dev/disk/by-id/XXXXX(XXXX为硬盘名称) 挂载好以后可以将之前的4G虚拟硬盘分离，然后删除即可。 总结 一定要提前规划好IP 群辉引导一定要选择SATA. 群辉洗白可以挂载一个ISO格式PE镜像，作为第一引导，在控制台页面修改sn和mac即可。 当LEDE作为二级路由，即WAN口协议为DHCP客户端时，要在LAN口的DHCP服务器高级设置中勾选‘强制’ //即使检测到另一台服务器，也要强制使用此网络上的 DHCP。]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>虚拟机</tag>
+        <tag>LEDE</tag>
+        <tag>软路由</tag>
+        <tag>PVE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Docker神器之百度云下载(群辉 & LEDE)]]></title>
+    <url>%2F2019%2F03%2F30%2FDocker%E7%A5%9E%E5%99%A8%E4%B9%8B%E7%99%BE%E5%BA%A6%E4%BA%91%E4%B8%8B%E8%BD%BD(%E7%BE%A4%E8%BE%89%20%26%20LEDE)%2F</url>
+    <content type="text"><![CDATA[前言入手了蜗牛星际，安装了lede以后发现酷软中心的aria2和tr都不能正常工作，可能是版本bug，无意间在论坛发现了利用docker这一神奇运行百度云第三方下载，尝试一番发现确实很好用，记录一下折腾的过程。原贴：http://koolshare.cn/thread-154383-1-1.html我没有使用原贴中的镜像 而是选择了另一位大神oldiy的镜像，下面是他的DockerHub主页和博客。https://hub.docker.com/u/oldiy/https://odcn.top/ LEDE软路由下使用第一步 LEDE酷软中心安装Docker插件这里不多解释，直接安装即可 第二步 配置Docker插件按照下图的设置即可 第三步 下载相关镜像在注册表页搜索相关镜像即可，如下图为百度云下载 第四步 创建容器在镜像页选择已经下载的镜像创建即可。在这里对容器进行相关配置，注意端口，和容器中给定的相同最好下面这一张图就能看明白端口和目录的设置了简单来说就是端口号正确且不与lede其他程序冲突就可以进入后台地址正确才能保证文件下载到你指定的位置然后点击创建即可 进入Web页面查看安装情况启动成功后就可以通过下面的链接进入web页面了http://你的路由器ip:5299 //这里的5299就是配置容器时的端口，尽量和dockerhub的相同。如果不同应该是进不去相关页面的使用自己的百度账号登录即可，然后点击右上角的设置注意这里的目录，不要修改使用默认即可 群辉下使用 （更新内容）第一步 群辉套件中心安装Docker插件不多解释 第二步 下载镜像在注册表搜索baidu下载下图中的镜像 第三步 配置镜像按照下图配置即可，配置完成后会自动启动容器配置下载路径配置端口 第四步 打开Web管理页面浏览器输入 &lt;你的IP&gt;:5299 进入web页面 解决百度云限速web的设置页面修改appid为1265486 默认工作目录修改为1/apps/baidu_shurufa 百度输入法不限速，所以修改为输入法的id 而默认工作目录就是登陆页面后所展现的目录把要下载的文件移动到/apps/baidu_shurufa 下载即可需要操作其他文件的时换回 266719 即可 结束2019年03月30日15:02:07更新2019年04月18日23:24:00]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>LEDE</tag>
+        <tag>Docker</tag>
+        <tag>下载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[软路由LEDE系统之samba局域网共享]]></title>
+    <url>%2F2019%2F03%2F29%2F%E8%BD%AF%E8%B7%AF%E7%94%B1LEDE%E7%B3%BB%E7%BB%9F%E4%B9%8Bsamba%E5%B1%80%E5%9F%9F%E7%BD%91%E5%85%B1%E4%BA%AB%2F</url>
+    <content type="text"><![CDATA[前言上周末看油管的时候发现了一款极具性价比的NAS-蜗牛星际。矿渣nas，三月初就开卖了，当时好像200包邮。我入手有点晚所以价格也高一些。290包邮。不过卖家给改好了双千兆网络。虽然是矿渣，但我这台内部没有多少灰尘。只有风扇上有灰。应该没运行多久。到手后由于没4有显示器和电源线。就去楼下电脑维修店买了根电源线，顺便借老板显示器装了系统。很久之前就想入手软路由了，但是动不动就上千的售价实在是难以接受。看到这个性价比还不错的就入手了。之前用的是k2p。没有usb接口，局域网共享就很难实现，而且就算有U盘，24小时工作也承受不了。现在终于可以好好享受一下samba带来的便携了。后期应该还会安装黑群辉实现更多的功能。如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。蜗牛星际主板上带了一个16G的固态硬盘。性能极差。和3.0的U盘速度差不多。装lede还勉强可以接受。现在没有硬盘也只能用这个来代替了。我安装的是koolshare论坛的lede系统，酷软中心很多插件，还是挺好用的。注：本文借鉴了koolshare论坛的两个帖子 这里简单做了一些总结，和一些自己的经验 http://koolshare.cn/thread-154153-1-1.htmlhttp://koolshare.cn/forum.php?mod=viewthread&amp;tid=110543&amp;highlight=samba 一、为安装盘剩余的空间创建新分区如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步是不需要做的。 先运行分区工具fdisk /dev/sda 输入p查看当前分区 输入n创建新的分区这里由于我已经创建 就不在截图了直接连续三次回车键，会默认将剩余的空间创建为一个新的分区。 输入w保存分区完成后会退出分区工具 使用mkfs命令格式化新建的分区mkfs.ext4 /dev/sda5说明 etx4是文件系统。如果是固态的话建议修改为f2fs。后面的sda5是新建的分区，分区名根据自己的修改即可。mkfs.f2fs /dev/sda5 （固态硬盘推荐使用） 赋予新添加的分区权限chmod -R a+rwx /mnt/sda5 重启，使分区表生效（好像不重启也可以，不过还是建议重启）二、挂载新创建的分区如果你的软路由主板usb借了移动硬盘或者sata口连接了机械硬盘，这一步也是不需要做的。这里就很简单了，打开路由器管理界面简单设置即可选择挂载点，在自定义位置填入/mnt/sda5 (挂载器要创建这个空文件夹，注意不要输错了) 三、将新创建的分区添加到samba的共享目录这里也很简单 按照下图的设置即可 给samba用户添加密码smbpasswd -a root （终端输入）然后输入密码回车最后重启一下软路由即可（想偷懒就直接重启samba服务即可） 总结其实对于大多用户来说，都会挂载一个硬盘来当做简易的NAS来使用。核心内容就是下面三步1.添加samba用户2.为用户设置密码3.添加该用户可以访问的目录这里我偷懒，加上在家里用，root用户就可以。不必要弄那些复杂的内容。嗯，就这样2019年03月30日00:28:30]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>LEDE</tag>
+        <tag>软路由</tag>
+        <tag>samba</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用Github搭建hexo静态博客总结]]></title>
+    <url>%2F2019%2F03%2F20%2F%E4%BD%BF%E7%94%A8Github%E6%90%AD%E5%BB%BAhexo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[第一次搭建博客大约是在18年6月份。当时是在腾讯云vps上安装宝塔，然后宝塔内部一键安装WordPress博客。在18年12月份发现Github+hexo这一神奇组合，果断尝试。然后又经历了期末考试和过年，博客也算是搁置了一段时间。前几天才重新捡起，然后又系统的自学了一下Git。所以打算写这个博客简单记录一下最基础的内容，可能有些小白看不懂，后期可能会慢慢完善的。 一、什么是Git、Github、Hexo？首先要知道这是完全不同的三个东西，但三者结合起来就会发生奇妙的反应。 什么是Git？Git是一个的分布式版本控制系统。 什么是Github？Github是一个提供免费服务的代码托管网站。 什么是Hexo？Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown 如果对github和git的关系感兴趣，可以去这个网站简单了解一下 https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137402760310626208b4f695940a49e5348b689d095fc000 二、安装Git、Node.js和hexo在以下网址下载软件Git官网下载地址 https://www.git-scm.com/download/node.js官网下载地址 https://nodejs.org/en/ （建议下载LTS版本）这两款软件选好安装目录使用默认设置即可 hexo安装安装好git和node.js后新建一个你要放置博客的文件夹，然后鼠标右键点击 Git bash here，在弹出的窗口输入npm install -g hexo-cli //实际上在任意文件夹下都可以 ，hexo安装的目录由node.js的配置决定 三、Hexo博客相关内容初始化hexo博客在博客目录鼠标右键点击 Git bash here 在弹出的窗口依次输入hexo init //初始化博客npm install //安装hexo需要的依赖包npm install hexo-deployer-git --save // 安装部署到github所需要的依赖包这时就可以写博客了（建议先了解一下md语法然后下载一个md编辑器进行创作）123hexo n 博客文章名 //在source/_post目录生成对应md文件hexo g //hexo转化为静态网页hexo s //本地服务器，可以实时预览博客 建议先了解一下md语法然后下载一个md编辑器进行创作完成这一步 在浏览器打开下面的链接 http://localhost:4000/ 就可以看见系统默认的一篇博客了和你写的博客了 到这里博客就大致成型了但是服务搭建在本地是没有什么意义的，我们需要发布到互联网。可以选择购买服务器，自行搭建git服务，也可以用github免费的代码托管服务 注册github并新建博客仓库github官网 https://github.com/自行注册然后新建一个名为 xxx.github.io 的仓库 //xxx为你的github用户名，这里不能错！！！不能自定义，必须要和github用户名相同 生成ssh密钥并将公钥添加到github在命令提示符输入 ssh-keygen -t rsa -C &quot;注册github时的email&quot;打开用户目录下隐藏的.ssh文件夹，打开id_rsa.pub文件，复制全部内容，粘贴到github的ssh处 修改博客配置文件配置博客目录下的_config.yml配置文件 这时就可以通过下面的命令将博客同步到github的仓库中 hexo d //发布博客 接下来就可以在链接到互联网的设备中输入下面链接访问你的博客了 http://xxxxx.github.io //xxxxx为你的用户名 四、添加DNS个性化域名并使用cdn加速注册一个域名这一步不详细介绍了，域名自己选购 添加域名解析域名解析的记录类型为CNAME 记录值为xxxxx.github.io //xxxxx为你的用户名 在博客目录的source文件夹添加一个CNAME文件 没有.txt或者其他 文件内容为个人域名(注意：没有http://和www) 然后一系列的命令同步到github远程仓库 123hexo cleanhexo ghexo d 等域名解析更新后就可以通过域名访问博客了 五、新电脑上继续写博客现在新电脑上安装Git 、 node.js 克隆远程代码到本地1git clone xxxxxxx 安装hexo1npm install hexo-cli -g 安装hexo需要的依赖包1npm install 安装部署到github所需要的依赖包1npm install hexo-deployer-git --save 安装gulp1npm install gulp -g 然后就是正常些博客的步骤了 快速发布博客快捷设置1git config --global alias.bp &apos;!hexo clean;hexo g;gulp g;hexo d&apos; 然后使用 git bp 就可以一键更新博客并发布了(cd 后面的目录为你的博客文件目录）取消方式1git config --global --unset alias.bp 快速推送1git config --global alias.fp &apos;!git add .;git commit -m &quot;快速push&quot;;git push&apos; 取消方法同上，不建议使用，最好老老实实写commit 关于博客的个性化可以看我的另一篇文章这是链接 转载注明出处 谢谢]]></content>
+      <categories>
+        <category>博客教程</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+        <tag>经验</tag>
+        <tag>博客</tag>
+        <tag>hexo</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[存储器与CPU的连接]]></title>
+    <url>%2F2019%2F03%2F19%2F%E5%AD%98%E5%82%A8%E5%99%A8%E4%B8%8ECPU%E7%9A%84%E8%BF%9E%E6%8E%A5%2F</url>
+    <content type="text"><![CDATA[课堂知识点记录 一、存储器容量的扩展1.位扩展(增加存储字长) 2.字扩展（增加存储字的数量） 3.字和位同时扩展 二、存储器与CPU连接1.合理选择存储芯片 2.数据线的连接 3.读写命令线的连接 4.地址线的连接 5.片选线的连接 6.其他，如 时序、负载 例题1234567设CPU有16根地址线、8根数据线，公用MREQ作为访存控制信号（低电平有效），用WR作为读写控制信号（高电平读，低电平写）。现有下列存储芯片：其中RAM芯片有1K×4、 4K×8、 8K×8，ROM芯片有2K×8、 4K×8、 8K×8，及74138译码器和各种门电路。画出CPU与存储器的连接图，要求如下：贮存地址空间分配：1） 6000H~67FFH为系统程序区。 6800H~6BFFH为用户程序区。2) 合理选用上述存储芯片，说明各选几片。3) 详细画出存储芯片的片选逻辑图。 解答说明1.16位地址线在ROM工作时A0-A10用于传送地址，A11-A13作为译码器的输入，A14-15和CPU的MRER作为74138译码器的使能输入。2.当RAM工作时A10空闲，但是在CPU与存储器连接时不可以有空闲的地址线，故与74138的Y5输出通过与非门作用于RAM使其工作。3.CPU的WR信号没有接入ROM是因为操作系统程序区一般不进行写操作。]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>计算机组成原理</tag>
+        <tag>存储器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[VMware虚拟机体验koolshare论坛LEDE固件]]></title>
+    <url>%2F2019%2F03%2F17%2FVMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%93%E9%AA%8Ckoolshare%E8%AE%BA%E5%9D%9BLEDE%E5%9B%BA%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[​ 博主自用的是路由器是斐讯K2P A2版，性能足够满足大多数家庭的需要了，但还是听说koolshare论坛的lede固件功能丰富，是软路由很常用的固件。只是现在用不到，也没有条件使用（毕竟价格接近4位数）。但看论坛截图里丰富的功能有些手痒，就打算在虚拟机里装上过过瘾。 一、固件下载链接：http://firmware.koolshare.cn/LEDE_X64_fw867/​链接是x64设备用的固件，有img格式和vmdk虚拟机专用的格式，这里选择虚拟机专用格式下载。 二、安装LEDE和安装其他虚拟机没有什么区别，有几处需要注意的地方我已经在图中标记出来了。安装到这里就差不多了。主要区别就是选择稍后安装操作系统，然后磁盘选择第一步中下载的文件和添加了一张网卡而已。安装后不要启动！安装后不要启动！安装后不要启动！ 三、虚拟机网卡配置和上一篇文章类似，设置VMware虚拟网卡。这里设置桥接网卡为计算机的网卡。nat地址和上一篇文章一样。然后设置lede系统的网卡配置好以后启动虚拟机。启动完毕后鼠标点击虚拟机内部然后输入vi /etc/config/network修改lan口的地址然后取消勾选本地连接中的ipv4和ipv6协议。 重点！重点！重点！重点！ 四、配置VMware Network Adapter VMnet8和上篇文章不同的是，这里我们的目的是通过虚拟机路由器系统进行上网，所以要配置上网关如下图 教程结束！//2019年03月20日19:26:46 更新 转载注明出处 谢谢]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>虚拟机</tag>
+        <tag>路由器</tag>
+        <tag>LEDE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[虚拟机内系统通过NAT方式连接外网，同时与本机进行通信]]></title>
+    <url>%2F2019%2F03%2F13%2F%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E7%B3%BB%E7%BB%9F%E9%80%9A%E8%BF%87NAT%E6%96%B9%E5%BC%8F%E8%BF%9E%E6%8E%A5%E5%A4%96%E7%BD%91%EF%BC%8C%E5%90%8C%E6%97%B6%E4%B8%8E%E6%9C%AC%E6%9C%BA%E8%BF%9B%E8%A1%8C%E9%80%9A%E4%BF%A1%2F</url>
+    <content type="text"><![CDATA[前言就在今天下午上课的时候突然发现自己好久没有写blog了，可能最近学习太忙，也可能最近没啥好写的。今天上课的时候有同学问到我关于虚拟机系统连接外网的问题，所以打算写这么一篇blog，也算加深一下自己的印象吧。 自求学以来，实验课用到的虚拟机软件都是VMware，相信大部分人对这个软件也不陌生，除了这个就是win10自带的Hyper-V虚拟机了.这里就简单的写一下VMware用NAT方式连接外网。 第一步 配置VMware的虚拟网络编辑器① 在VMware的菜单栏中点击编辑，在弹出的菜单中选择虚拟网络编辑器，在弹出的窗口中点击更改设置，可能会提示需要管理员权限，确定即可。② 在新弹出的界面中点击VMware8 这是VMware默认的nat模式，可以用这个默认的网络，也可以新建一个，这里没有什么区别。选中该网络后修改配置为图中的配置。下方的子网网段可自己定义。没有什么影响，只要不和上面的网络冲突即可（建议使用默认的）。然后点击图中的NAT设置，网关可以修改，建议使用默认，并记住这个网关。③ 设置虚拟机网卡为VMware8 NAT模式，这个就很简单了，根据图中的步骤来即可。到这里VMware的设计就完成了。 第二步 修改虚拟机系统的网络连接设置这一步非常简单，因为大家用的系统不一样，设置界面也不尽相同，这里以centos7系统为例，简单介绍一下。这里的IP地址不是固定的只要在同一网段内即可。但是网关地址一定是上一步中nat设置中的网关地址。完成这一步虚拟机应该就可以连接外网使用百度了。 三 建立虚拟机与宿主机的连接。此时虚拟机虽然可以连接外网，但并不能和宿主机进行通信，也就是说此时的宿主机并不能ping通虚拟机的ip。想要建立连接也很简单。只需要设置一下网络适配器中的VMware Network Adapter VMnet8 网卡的ip和子网掩码即可。 注：如果是学校的机房，或者用过脚本优化的电脑可能开机后不会启动VMware的一些必要的服务，可以手动开启。详见下图 //2019年03月20日19:25:10 更新转载注明出处 谢谢]]></content>
+      <categories>
+        <category>实用教程</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ARM处理的八种寻址方式]]></title>
+    <url>%2F2018%2F12%2F24%2FARM%E5%A4%84%E7%90%86%E7%9A%84%E5%85%AB%E7%A7%8D%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[ARM处理的八种寻址方式 一、寄存器寻址操作数的值在寄存器中，指令中的地址码字段指出的是寄存器编号，指令执行时直接取出寄存器值来操作。 二、立即寻址立即寻址指令中的操作码字段后面的地址码部分即是操作数本身，也就是说，数据就包含在指令当中，取出指令也就取出了可以立即使用的操作数(这样的数称为立即数)。 三、寄存器移位寻址寄存器移位寻址是ARM指令集特有的寻址方式。当第2个操作数是寄存器移位方式时，第2个寄存器操作数在与第1个操作数结合之前，选择进行移位操作。 四、寄存器间接寻址寄存器间接寻址指令中的地址码给出的是一个通用寄存器的编号，所需的操作数保存在寄存器指定地址的存储单元中，即寄存器为操作数的地址指针。 五、基址寻址基址寻址就是将基址寄存器的内容与指令中给出的偏移量相加，形成操作数的有效地址。基址寻址用于访问基址附近的存储单元，常用于查表、数组操作、功能部件寄存器问等。 六、多寄存器寻址多寄存器寻址一次可传送几个寄存器值，允许一条指令传送16个寄存器的任何子集或所有寄存器。在多寄存器寻址中会进行2个操作，①是操作数据②是修改地址LDMIA中的A表示先进行①操作，再进行②操作。如果是LDMIB则先②后①LDMIA中的I表示存储器地址由低到高操作。如果是D则表示由高到低。 七、堆栈寻址堆栈是一个按特定顺序进行存取的存储区，操作顺序为“后进先出” 。堆栈寻址是隐含的，它使用一个专门的寄存器(堆栈指针) 指向一块存储区域(堆栈，指针所指向的存储单元即是堆栈的栈顶。存储器堆栈可分为两种：向上生长：向高地址方向生长，称为递增堆栈向下生长：向低地址方向生长，称为递减堆栈堆栈指针指向最后压入的堆栈的有效数据项，称为满堆栈；堆栈指针指向下一个待压入数据的空位置，称为空堆栈。所有可以组合出四种类型的堆栈方式：满递增：堆栈向上增长，堆栈指针指向内含有效数据项的最高地址。指令如LDMFA、STMFA等；空递增：堆栈向上增长，堆栈指针指向堆栈上的第一个空位置。指令如LDMEA、STMEA等；满递减：堆栈向下增长，堆栈指针指向内含有效数据项的最低地址。指令如LDMFD、STMFD等；空递减：堆栈向下增长，堆栈指针向堆栈下的第一个空位置。指令如LDMED、STMED等。 八、相对寻址相对寻址是基址寻址的一种变通。由程序计数器PC提供基准地址，指令中的地址码字段作为偏移量，两者相加后得到的地址即为操作数的有效地址。 转载注明出处 谢谢]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>ARM嵌入式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[《ARM嵌入式》提纲总结]]></title>
+    <url>%2F2018%2F12%2F20%2F%E3%80%8AARM%E5%B5%8C%E5%85%A5%E5%BC%8F%E3%80%8B%E6%8F%90%E7%BA%B2%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[一、Bootloader在嵌入式系统中主要起什么作用？完成哪些工作？123456答：Boot Loader是在操作系统内核运行之前运行的一段小程序。属于嵌入式软件最底层的部分。​ 整个系统的加载启动任务就完全由Bootloader完成​ Bootloader初始化硬件设备、建立内存空间的映射图，从而将系统的软硬件环境设定在一个正确的状态，以便接下来加载操作系统内核、运行用户应用程序。​ Bootloader两种加载方式：​ ①启动加载模式：也称自主（Autonomous）模式 ，是指Bootloader从目标机上的某个固态存储设备上将操作系统加载到RAM中运行，整个过程并没有用户的介入。是Bootloader的正常工作模式，在嵌入式产品完工交付时或者实际使用时，必须使得Bootloader工作在这种模式下 。​ ②下载模式：目标板上的Bootloader将先通过串口连接或网络连接等通信手段从主机下载文件，Bootloader 的这种模式通常在开发过程中以及第一次安装内核与根文件系统时被使用，此外，以后的系统更新也会用到Bootloader的这种工作模式。这种模式下的Bootloader通常都会向它的终端用户提供一个简单的命令行接口 二、ARM核用于存储PC的是什么寄存器？R13,R14分别存储什么？12345​ R15用于存储PC(程序计数寄存器)。​ R13通常作为堆栈指针(SP),用于保存待使用的寄存器内容。​ R14称为链接寄存器（LR)​ ①使用BL指令调用子程序时，返回地址自动存入R14中；​ ②发生异常时，R14对应得异常模式版本设置为异常返回地址。 三、嵌入式系统的概念，组成，特点？12345678910111213141516171819​ 通俗来说：包含（安装）在电子装置（应用对象）内部的计算机系统称为嵌入式系统。​ 国内高校流行的定义：嵌入式系统是以应用为中心，以计算机技术为基础，并且软硬件可裁剪，适用于应用系统对功能、可靠性、成本、体积、功耗有严格要求的专用计算机系统。​ 组成：一般是由嵌入式微处理器、外围硬件设备、嵌入式操作系统以及用户的应用程序组成。​ 硬件：​ 嵌入式处理器、各种类型存储器、模拟电路及电源、接口控制器及接插件​ 软件：​ 实时操作系统（RTOS）、设备驱动（Device Driver）、协议栈（Protocol Stack）、应用程序（Application）​ 特点：​ 1专门用于特定任务​ 2技术融合​ 3有实时约束​ 4有功耗约束​ 5软件没有系统和应用的区别，软件固化。​ 6系统内核小​ 7软硬件可裁剪​ 8高可靠性​ 9资源比PC少得多​ 10嵌入式系统需要专用的开发工具​ 11非垄断市场 四、有时要使用thumb的原因？12​ 平衡代码性能和系统成本​ 准许编码为更短的16位机器指令 五、ARM处理器的工作模式有哪几种？ 六、寄存器CPSR，SPSR的功能各是什么？12345 CPSR：当前程序状态寄存器 SPSR：程序状态保存寄存器（备份程序状态寄存器） CPSR在任何处理器模式下都可以访问，用于用户级编程时保存条件码​ 异常发生时，SPSR保存CPSR的状态（内容），异常恢复后用SPSR来回复CPSR​ 注意：用户模式和系统模式不是异常中断模式，所以没有SPSR! 七、ARM异常有几种？各进入什么工作模式？退出时采用什么指令？​ ​ ​ 异常的优先级：​ 八、什么是小端、大端存储器组织？12​ 小端：较高的有效字节存放在较高的存储器地址，较低的有效字节存放在较低的存储器地址。（同同小）​ 大端：较高的有效字节存放在较低的存储器地址，较低的有效字节存放在较高的存储器地址。（正反大） 九、 ARM7TDMI中的T、D、M、I分别表示什么含义？123456​ ARM7是基于ARM体系结构V4版本的低端ARM核，弥补了ARM6很难在低于5V的电压下稳定工作的不足，并增加了一下功能​ T:支持高密度16位的Thumb指令集​ D:支持片上调试​ M:支持64位乘法​ I:支持EmbededICE观察硬件​ 注意：ARM核并非芯片，于RAM、ROM、片内外设等其他硬件组合在一起才称为芯片！ 十、ARM7TDMI采用什么样的体系结构？其可寻址空间有多大？12​ ARM7TDMI采用冯·诺依曼结构，指令和结构公用一条32位总线​ 数据可以是字节(8位)2^32、半字（16位）2^31或者字(32位)2^30。 十一、ARM7TDMI处理器采用几级流水线处理，使用何种存储器编址方式？1234​ ARM7TDMI处理器采用三级流水线​ 取址：从寄存器装载一条指令​ 编码：识别将要被执行的指令​ 执行：处理指令并将结果写会寄存器 十二、ARM处理器模式和ARM处理器状态有什么区别？123​ ARM处理器模式共有7种​ ARM处理器状态有2种，ARM状态和Thumb状态​ 两种状态均有7种处理器模式，且状态切换不影响处理器模式或寄存器内容 十三、MOV指令和LDR加载指令的区别和用途？12​ MOV指令用于将数据从一个寄存器传送到另一个寄存器，或者将一个常数传送到一个寄存器中，但是不能访问内存​ LDR指令用于将内存中的数据放入寄存器中（后续会详细介绍ARM指令） 十四、ARM7TDMI支持哪几种指令集，各有什么特点？12​ ARM指令集：指令32位，效率高，代码密度低，所有ARM指令都可以有条件执行​ Thumb指令：指令16位，代码密度高，仅有一条指令具备条件执行功能，是ARM集的子集。 转载注明出处 谢谢]]></content>
+      <categories>
+        <category>学习总结</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>ARM嵌入式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[华硕ZX50J安装黑苹果的辛酸路]]></title>
+    <url>%2F2018%2F12%2F07%2Fzx50%E5%AE%89%E8%A3%85%E9%BB%91%E8%8B%B9%E6%9E%9C%E7%9A%84%E8%BE%9B%E9%85%B8%E8%B7%AF%2F</url>
+    <content type="text"><![CDATA[前言&emsp;&emsp;前段时间看了《网络迷踪》—- 一个用电脑录屏功能拍摄的电影，然后就被Mac OS的流畅操作吸引了，当天晚上就在虚拟机安装了黑苹果。毕竟虚拟机，体验极差。作为一个计算机专业的学生，怎么能仅仅满足于虚拟机呢！！！经过了整整一个下午，终于在笔记本上安装了黑苹果。刚装好以后还是很激动，但是毕竟是“黑”苹果，bug的存在是必须的。这篇文章就是对整个修复驱动折腾过程的总结。 下载地址更新(同步更新)2019年10月23日11:09:41Github地址Gitee地址 国内下载速度更理想 第一步：找资源&emsp;&emsp;万事开头难，黑苹果一样如此。&emsp;&emsp;由于国内的一些黑苹果论坛（比如远景论坛，微博关注好久了，也没放邀请码）都不开放注册，所以找资源是相当麻烦的，不过好在从同款电脑QQ群的一个朋友手机借来了一个远景论坛的账号。终于能在远景论坛下载一些安装工具了。当然最主要的就是对应机型的Clover。 第二步：看教程&emsp;&emsp;教程我是在bilibili看的链接&emsp;&emsp;当然，只看一个视频是肯定不够的，在bilibili上多看看视频，多翻翻帖子就ok了，只要迈出了第一步，折腾的时光还是很快乐的。总结起来就是下面几个步骤：&emsp;&emsp;一、下载镜像并制作U盘启动盘，尽量16G及以上，mac os的镜像还是挺大的，推荐去黑果小兵的博客下载，里面有很多黑苹果的干货！&emsp;&emsp;二、设置bios，U盘启动安装。&emsp;&emsp;三、进入系统，修复bug。&emsp;&emsp;虽然只有三步，但是实际情况往往复杂的多，具体情况还要爬论坛，搜教程。 第三步：修复bug&emsp;&emsp;在黑苹果论坛中流行这个这么一句话：进系统只是万里长征的第一步，后面还有很多路要走。。。&emsp;&emsp;总结一下我遇到的几个坑。 一、花屏&emsp;&emsp;花屏是笔记本安装黑苹果经常遇到的问题，所以真心不建议在笔记本上安装黑苹果，除非你的主板可以屏蔽集显，用独显输出画面，或者你只是为了折腾。花屏解决方法论坛上有用补丁和注入EDID,论坛教程很多，这里就不多说了。我用的是加入花屏补丁，然后重建缓存。（当然了，作为强迫症的我肯定也注入了EDID）。还有就是如果进系统前出现了8个苹果，注入edid无效的话就要在主板开启CMS了。 二、网卡、蓝牙&emsp;&emsp;我的笔记本是在16年年初买的，也不算太老。自带的网卡论坛也是有驱动教程的。不过只能用WIFI不能用蓝牙。但是用苹果的设备如果没有AirDrop和接力，那就像失去了灵魂的人。自带的网卡无法实现这个功能，只能更换网卡，于是在某鱼淘了个有驱动的网卡Bcm94352z.好像是戴尔的拆机网卡。成色还是很不错的。用起来也很好。经历了一个下午的安装、折腾。终于用上了接力和AirDrop。简直不要太舒服。剪切板同步大大提高了写作效率。如果是同款网卡的朋友，下面会放上我的Clover的链接。也会放bcm.94352的驱动教程。 三、USB3.0&emsp;&emsp;我是那种受不了手机图标右上角有未读消息的那种人。原则就是-时间可以浪费，红点一定要取消。所以我直接选择了安装最新版的系统10.14.1。不巧的是，苹果在最新版（10.14.1）的系统中加入了USB端口数量限制为15个的设定。所以升级10.14.1后一大批用户USB3.0不能用。在笔记本的表现就是只有2.0的速度。经历了长时间的爬贴尝试终于在bilibili上找到了视频教程。UP主的教程还是挺详细的。下面是链接 总结&emsp;&emsp;黑苹果折腾来来回回也有三个月的时间了，现在也到了能日常使用的状态了，所以就暂时不继续研究了（主要是因为准备期末和六级-—_– ! )就先写到这里吧。转载注明出处 谢谢]]></content>
+      <categories>
+        <category>黑苹果</category>
+      </categories>
+      <tags>
+        <tag>黑苹果</tag>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+</search>
